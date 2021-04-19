@@ -2,7 +2,7 @@
 namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("TypeSafeInternals")>]
+[<assembly: AssemblyTitleAttribute("TheAngryByrd.Myriad.Plugins.TypeSafeInternals")>]
 [<assembly: AssemblyProductAttribute("TypeSafeInternals")>]
 [<assembly: AssemblyVersionAttribute("0.1.0")>]
 [<assembly: AssemblyMetadataAttribute("ReleaseDate","2017-03-17T00:00:00.0000000")>]
@@ -13,7 +13,7 @@ open System.Reflection
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] AssemblyTitle = "TypeSafeInternals"
+    let [<Literal>] AssemblyTitle = "TheAngryByrd.Myriad.Plugins.TypeSafeInternals"
     let [<Literal>] AssemblyProduct = "TypeSafeInternals"
     let [<Literal>] AssemblyVersion = "0.1.0"
     let [<Literal>] AssemblyMetadata_ReleaseDate = "2017-03-17T00:00:00.0000000"

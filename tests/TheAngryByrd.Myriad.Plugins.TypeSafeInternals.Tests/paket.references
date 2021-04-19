@@ -3,3 +3,6 @@ FSharp.Core
 Microsoft.NET.Test.Sdk
 YoloDev.Expecto.TestSdk
 altcover
+Myriad.Core
+Myriad.Sdk
+Npgsql.Fsharp

@@ -1,0 +1,5 @@
+<Project>
+    <ItemGroup>
+        <MyriadSdkGenerator Include="$(MSBuildThisFileDirectory)/../lib/net5.0/TheAngryByrd.Myriad.Plugins.TypeSafeInternals.dll" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <GenerateProgramFile>false</GenerateProgramFile>
+        <MyriadSdkVerboseOutput>true</MyriadSdkVerboseOutput>
+    <!-- <MyriadSdkWaitForDebugger>true</MyriadSdkWaitForDebugger> -->
+    </PropertyGroup>
+    <ItemGroup>
+
+        <ProjectReference Include="../../src/TypeSafeInternals/TypeSafeInternals.fsproj" />
+        <ProjectReference Include="../../src/TheAngryByrd.Myriad.Plugins.TypeSafeInternals/TheAngryByrd.Myriad.Plugins.TypeSafeInternals.fsproj" />
+    </ItemGroup>
+        <ItemGroup>
+        <Compile Include="AssemblyInfo.fs" />
+        <Compile Include="Generated.fs">
+            <MyriadFile>Foo.txt</MyriadFile>
+            <MyriadNameSpace>DataSchema</MyriadNameSpace>
+        </Compile>
+        <Compile Include="Tests.fs" />
+        <Compile Include="Main.fs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Watch Include="Foo.txt" />
+    </ItemGroup>
+    <Import Project="..\..\src\TheAngryByrd.Myriad.Plugins.TypeSafeInternals\build\TheAngryByrd.Myriad.Plugins.TypeSafeInternals.InTest.props" />
+    <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>
+

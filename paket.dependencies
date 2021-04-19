@@ -7,6 +7,9 @@ nuget Expecto 9.0.2
 nuget YoloDev.Expecto.TestSdk 0.9.2
 nuget Microsoft.NET.Test.Sdk 16.8.0
 nuget altcover ~> 7
+nuget Myriad.Core
+nuget Myriad.Sdk
+nuget Npgsql.Fsharp 3.10.0
 
 // [ FAKE GROUP ]
 group Build

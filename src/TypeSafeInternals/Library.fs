@@ -1,56 +1,85 @@
-namespace TypeSafeInternals
+namespace TheAngryByrd.TypeSafeInternals
 open System
-open System.Security.Cryptography
-open System.Text
-
-/// <summary> Initial module </summary>
-module Say =
-
-    /// <summary> Finite list of Colors </summary>
-    type FavoriteColor =
-    | Red
-    | Yellow
-    | Blue
-
-    /// <summary> A person with many different field types </summary>
-    type Person = {
-        Name : string
-        FavoriteNumber : int
-        FavoriteColor : FavoriteColor
-        DateOfBirth : DateTimeOffset
-    }
-
-    /// <summary>Says hello to a specific person</summary>
-    let helloPerson (person : Person) =
-        sprintf
-            "Hello %s. You were born on %s and your favorite number is %d. You like %A."
-            person.Name
-            (person.DateOfBirth.ToString("yyyy/MM/dd"))
-            person.FavoriteNumber
-            person.FavoriteColor
-
-    /// <summary>
-    /// Adds two integers <paramref name="a"/> and <paramref name="b"/> and returns the result.
-    /// </summary>
-    ///
-    /// <remarks>
-    /// This usually contains some really important information that you'll miss if you don't read the docs.
-    /// </remarks>
-    ///
-    /// <param name="a">An integer.</param>
-    /// <param name="b">An integer.</param>
-    ///
-    /// <returns>
-    /// The sum of two integers.
-    /// </returns>
-    ///
-    /// <exceptions cref="M:System.OverflowException">Thrown when one parameter is max
-    /// and the other is greater than 0.</exceptions>
-    let add a b =
-        a + b
+open System.Reflection
+module Delegate =
+    let public BindingFlagsToSeeAll : BindingFlags=
+            BindingFlags.Static |||
+            BindingFlags.FlattenHierarchy |||
+            BindingFlags.Instance |||
+            BindingFlags.NonPublic |||
+            BindingFlags.Public;
 
 
-    /// I do nothing
-    let nothing name =
-        name |> ignore
+    let createStaticArity0<'returnType> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Func<'returnType>>)
+        |> unbox<Func<'returnType>>
+        |> FuncConvert.FromFunc
 
+    let createStaticArity1<'input1, 'returnType> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Func<'input1, 'returnType>>)
+        |> unbox<Func<'input1, 'returnType>>
+        |> FuncConvert.FromFunc
+
+    let createStaticArity2<'input1, 'input2, 'returnType> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Func<'input1, 'input2, 'returnType>>)
+        |> unbox<Func<'input1, 'input2, 'returnType>>
+        |> FuncConvert.FromFunc
+
+    let createStaticArity3<'input1, 'input2, 'input3, 'returnType> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Func<'input1, 'input2, 'input3, 'returnType>>)
+        |> unbox<Func<'input1, 'input2, 'input3, 'returnType>>
+        |> FuncConvert.FromFunc
+
+    let createStaticArity4<'input1, 'input2, 'input3, 'input4, 'returnType> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Func<'input1, 'input2, 'input3, 'input4, 'returnType>>)
+        |> unbox<Func<'input1, 'input2, 'input3, 'input4, 'returnType>>
+        |> FuncConvert.FromFunc
+
+    let createStaticArity5<'input1, 'input2, 'input3, 'input4, 'input5, 'returnType> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Func<'input1, 'input2, 'input3, 'input4, 'input5, 'returnType>>)
+        |> unbox<Func<'input1, 'input2, 'input3, 'input4, 'input5, 'returnType>>
+        |> FuncConvert.FromFunc
+
+
+
+    let createStaticArity0ReturningUnit (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Action>)
+        |> unbox<Action>
+        |> FuncConvert.FromAction
+
+    let createStaticArity1ReturningUnit<'input1> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Action<'input1>>)
+        |> unbox<Action<'input1>>
+        |> FuncConvert.FromAction
+
+    let createStaticArity2ReturningUnit<'input1, 'input2> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Action<'input1, 'input2>>)
+        |> unbox<Action<'input1, 'input2>>
+        |> FuncConvert.FromAction
+
+    let createStaticArity3ReturningUnit<'input1, 'input2, 'input3> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Action<'input1, 'input2, 'input3>>)
+        |> unbox<Action<'input1, 'input2, 'input3>>
+        |> FuncConvert.FromAction
+
+    let createStaticArity4ReturningUnit<'input1, 'input2, 'input3, 'input4> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Action<'input1, 'input2, 'input3, 'input4>>)
+        |> unbox<Action<'input1, 'input2, 'input3, 'input4>>
+        |> FuncConvert.FromAction
+
+    let createStaticArity5ReturningUnit<'input1, 'input2, 'input3, 'input4, 'input5> (ty : Type) name =
+        ty.GetMethod(name, BindingFlagsToSeeAll)
+            .CreateDelegate(typeof<Action<'input1, 'input2, 'input3, 'input4, 'input5>>)
+        |> unbox<Action<'input1, 'input2, 'input3, 'input4, 'input5>>
+        |> FuncConvert.FromAction
