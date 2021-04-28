@@ -187,14 +187,7 @@ module DSLOperators =
 
 
 open DSLOperators
-open System.Collections.Generic
 open NuGet.ProjectModel
-// type Target = Dictionary<string,obj>
-// type Targets = Dictionary<string, Target>
-// type ProjectAssetsJson = {
-//     targets : Dictionary<string,Targets>
-//     packageFolders : Dictionary<string,string>
-// }
 
 [<MyriadGenerator("theangrybyrd.typesafeinternals")>]
 type TypeSafeInternalsGenerator() =
@@ -214,7 +207,6 @@ type TypeSafeInternalsGenerator() =
 
         member x.Generate(ctx : GeneratorContext) : FsAst.AstRcd.SynModuleOrNamespaceRcd list =
             try
-
                 let outputDir = System.Environment.CurrentDirectory
                 let projectAssetsJsonFileInfo = IO.FileInfo <| IO.Path.Combine(outputDir, "obj", "project.assets.json")
 
@@ -237,7 +229,7 @@ type TypeSafeInternalsGenerator() =
 
                 let parseVersion (v : string) =
                     v.Split('=').[1]
-                AppDomain.CurrentDomain.add_AssemblyResolve(ResolveEventHandler(fun sender args ->
+                AppDomain.CurrentDomain.add_AssemblyResolve(ResolveEventHandler(fun _ args ->
                     if args.Name.Contains(".resources") then null
                     else
                         match AppDomain.CurrentDomain.GetAssemblies() |> Seq.tryFind(fun a -> a.FullName = args.Name) with
@@ -246,7 +238,7 @@ type TypeSafeInternalsGenerator() =
                             // Npgsql, Version=4.1.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7
                             let toLoad =
                                 match args.Name.Split(',') |> Array.toList with
-                                | name::version:: xs -> {|Name = name; Version= parseVersion version |}
+                                | name::version::_ -> {|Name = name; Version= parseVersion version |}
                                 | others -> failwithf "None match %A" others
 
                             match findDLL toLoad.Name |> Seq.tryHead with
@@ -271,7 +263,6 @@ type TypeSafeInternalsGenerator() =
                     |> List.map(Assembly.Load)
                     |> List.map(fun a -> a, a.GetTypes())
                     |> List.map(fun (a, tys) -> a, tys |> Seq.filter(fun t -> moduleFilterTypes |> Seq.exists t.FullName.Contains |> not ) |> Seq.map(fun t -> t, t.GetMethods(bindingFlagsToSeeAll) |> Seq.filter(fun t -> functionFilterTypes |> Seq.exists t.Name.Contains |> not ) |> Seq.filter(fun mi -> mi.IsPublic |> not && mi.IsStatic)))
-
 
 
                 let ``let private loadedAssembly = Assembly.Load`` assemblyName =

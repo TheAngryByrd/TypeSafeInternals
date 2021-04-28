@@ -2,3 +2,4 @@ FSharp.Core
 Microsoft.SourceLink.GitHub
 Myriad.Core
 Myriad.Sdk
+NuGet.ProjectModel
