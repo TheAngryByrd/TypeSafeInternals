@@ -10,6 +10,7 @@ nuget altcover ~> 7
 nuget Myriad.Core
 nuget Myriad.Sdk
 nuget Npgsql.Fsharp 3.10.0
+nuget NuGet.ProjectModel 5.9.0 redirects: on
 
 // [ FAKE GROUP ]
 group Build

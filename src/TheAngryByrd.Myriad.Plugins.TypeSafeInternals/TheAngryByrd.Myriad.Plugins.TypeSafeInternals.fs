@@ -151,6 +151,7 @@ module TypeHelpers =
             SynType.CreateApp((toFSReservatedWord false t  |> SynType.CreateLongIdent), typeArgs |> List.map fst)
         synTy, [t.Namespace] @ namespaces
 
+
 module DSL =
     /// Creates : open {{namespace}}
     let openNamespace (``namespace`` ) =
@@ -186,6 +187,14 @@ module DSLOperators =
 
 
 open DSLOperators
+open System.Collections.Generic
+open NuGet.ProjectModel
+// type Target = Dictionary<string,obj>
+// type Targets = Dictionary<string, Target>
+// type ProjectAssetsJson = {
+//     targets : Dictionary<string,Targets>
+//     packageFolders : Dictionary<string,string>
+// }
 
 [<MyriadGenerator("theangrybyrd.typesafeinternals")>]
 type TypeSafeInternalsGenerator() =
@@ -205,6 +214,27 @@ type TypeSafeInternalsGenerator() =
 
         member x.Generate(ctx : GeneratorContext) : FsAst.AstRcd.SynModuleOrNamespaceRcd list =
             try
+
+                let outputDir = System.Environment.CurrentDirectory
+                let projectAssetsJsonFileInfo = IO.FileInfo <| IO.Path.Combine(outputDir, "obj", "project.assets.json")
+
+                let lockfileFormat = LockFileFormat()
+                let lockfile = lockfileFormat.Read(projectAssetsJsonFileInfo.FullName)
+                let findDLL assemblyName =
+                    lockfile.Targets
+                    |> Seq.collect(fun t -> t.Libraries)
+                    |> Seq.tryFind(fun l -> l.Name = assemblyName)
+                    |> Option.map(fun l ->
+                        let lib = lockfile.Libraries |> Seq.find(fun l -> l.Name = assemblyName)
+                        l.CompileTimeAssemblies
+                        |> Seq.collect(fun c ->
+                            lockfile.PackageFolders
+                            |> Seq.map(fun p -> IO.Path.Join(p.Path, lib.Path, c.Path))
+                            |> Seq.filter(fun f -> IO.File.Exists f)
+                        )
+                    )
+                    |> Option.defaultValue Seq.empty
+
                 let parseVersion (v : string) =
                     v.Split('=').[1]
                 AppDomain.CurrentDomain.add_AssemblyResolve(ResolveEventHandler(fun sender args ->
@@ -218,14 +248,10 @@ type TypeSafeInternalsGenerator() =
                                 match args.Name.Split(',') |> Array.toList with
                                 | name::version:: xs -> {|Name = name; Version= parseVersion version |}
                                 | others -> failwithf "None match %A" others
-                            if toLoad.Name = "Npgsql" then
-                                Assembly.LoadFrom("/Users/jimmybyrd/.nuget/packages/npgsql/4.1.1/lib/netstandard2.1/Npgsql.dll")
-                            elif toLoad.Name = "Npgsql.FSharp" then
-                                Assembly.LoadFrom("/Users/jimmybyrd/.nuget/packages/npgsql.fsharp/3.10.0/lib/netstandard2.0/Npgsql.FSharp.dll")
-                            elif toLoad.Name = "Ply" then
-                                Assembly.LoadFrom("/Users/jimmybyrd/.nuget/packages/ply/0.3.1/lib/netstandard2.0/Ply.dll")
-                            else
-                                null
+
+                            match findDLL toLoad.Name |> Seq.tryHead with
+                            | Some lib -> Assembly.LoadFrom lib
+                            | None -> null
                 ))
                 let assemblies = [
                     "Npgsql.FSharp"
@@ -246,27 +272,6 @@ type TypeSafeInternalsGenerator() =
                     |> List.map(fun a -> a, a.GetTypes())
                     |> List.map(fun (a, tys) -> a, tys |> Seq.filter(fun t -> moduleFilterTypes |> Seq.exists t.FullName.Contains |> not ) |> Seq.map(fun t -> t, t.GetMethods(bindingFlagsToSeeAll) |> Seq.filter(fun t -> functionFilterTypes |> Seq.exists t.Name.Contains |> not ) |> Seq.filter(fun mi -> mi.IsPublic |> not && mi.IsStatic)))
 
-
-                // let ass = Assembly.Load("Npgsql.FSharp")
-                // let types = ass.GetTypes()
-
-                // let gatherMiDetails (mi : MethodInfo) =
-                //     let inputs =
-                //         mi.GetParameters()
-                //         |> Seq.map(fun p -> p.ParameterType.FullName)
-                //         |> String.concat " -> "
-                //     let fullSignature = $"{inputs} -> {mi.ReturnType.FullName}"
-                //     fullSignature
-                // // TODO: alias System.Void -> unit
-                // types
-                // |> Seq.filter(fun t -> t.FullName.Contains("+") |> not )
-                // |> Seq.filter(fun t -> t.FullName = "Npgsql.FSharp.SqlModule") // Todo remove
-                // |> Seq.collect(fun t -> t.GetMethods(bindingFlagsToSeeAll))
-                // |> Seq.filter(fun mi -> mi.Name.Contains("@") |> not)
-                // |> Seq.filter(fun mi -> mi.IsPublic |> not && mi.IsStatic)
-                // |> Seq.filter(fun mi -> mi.Name = "populateCmd") // Todo remove
-                // |> Seq.map(gatherMiDetails)
-                // |> Seq.iter(fun m -> printfn $"{m}")
 
 
                 let ``let private loadedAssembly = Assembly.Load`` assemblyName =
