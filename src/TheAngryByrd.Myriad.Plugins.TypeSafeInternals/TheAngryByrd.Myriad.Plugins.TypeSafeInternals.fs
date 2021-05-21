@@ -35,7 +35,7 @@ module Extensions =
         static member CreateLongIdent(id, args, access) =
             SynPatRcd.LongIdent { Args = args; Id = id; Access = Some access; Range = range.Zero; ExtraId = None; TyparDecls = None }
         static member CreateUnit () =
-            SynPatRcd.CreateParen(
+            SynPatRcd.CreateParen (
                 SynPatRcd.Const
                     {
                         Const = SynConst.Unit
@@ -212,6 +212,41 @@ module DSLOperators =
 open DSLOperators
 open NuGet.ProjectModel
 
+
+
+[<RequireQualifiedAccessAttribute>]
+type ModuleTree =
+| Module of string * ModuleTree list
+| Leaf of list<SynModuleDecl>
+
+module ModuleTree =
+
+    let fromExtractRecords  (xs : list<Ident list * list<SynModuleDecl>>) =
+        let rec addPath subFilePath parts nodes =
+            match parts with
+            | [] -> nodes
+            | hp :: tp ->
+                addHeadPath subFilePath hp tp nodes
+        and addHeadPath subFilePath (part : string) remainingParts (nodes : ModuleTree list)=
+            match nodes with
+            | [] ->
+                let classes =
+                    if remainingParts |> List.isEmpty then
+                        (snd subFilePath) |> List.map(fun c -> ModuleTree.Leaf( c))
+                    else
+                        List.empty
+                ModuleTree.Module(part, addPath subFilePath remainingParts classes )
+                |> List.singleton
+            | ModuleTree.Module(title, subnodes) :: nodes when title = part -> ModuleTree.Module(title, addPath subFilePath remainingParts subnodes ) :: nodes
+            | hn :: tn -> hn :: addHeadPath subFilePath part remainingParts tn
+
+        ([], xs)
+        ||> List.fold(fun state (moduleIdent, synTypeDefns) ->
+            let pathParts = moduleIdent |> List.map(fun i -> i.idText)
+            addPath (moduleIdent, [synTypeDefns]) pathParts state
+        )
+
+
 [<MyriadGenerator("theangrybyrd.typesafeinternals")>]
 type TypeSafeInternalsGenerator() =
     let bindingFlagsToSeeAll : BindingFlags=
@@ -230,6 +265,7 @@ type TypeSafeInternalsGenerator() =
 
         member x.Generate(ctx : GeneratorContext) : FsAst.AstRcd.SynModuleOrNamespaceRcd list =
             try
+
                 let outputDir = System.Environment.CurrentDirectory
                 let projectAssetsJsonFileInfo = IO.FileInfo <| IO.Path.Combine(outputDir, "obj", "project.assets.json")
 
@@ -267,9 +303,11 @@ type TypeSafeInternalsGenerator() =
                             | Some lib -> Assembly.LoadFrom lib
                             | None -> null
                 ))
-                let assemblies = [
-                    "Npgsql.FSharp"
-                ]
+
+                let assemblies =
+                    ctx.InputFilename
+                    |> IO.File.ReadAllLines
+                    |> Seq.toList
 
                 let moduleFilterTypes = [
                     "+"
@@ -333,8 +371,6 @@ type TypeSafeInternalsGenerator() =
 
 
                 let createStaticMethod (mi : MethodInfo) =
-                    // if mi.Name = "defaultConString" then
-                    //     Debugging.waitForDebuggerAttached "myriad"
 
                     let miParams = mi.GetParameters()
 
@@ -484,8 +520,6 @@ type TypeSafeInternalsGenerator() =
                     synModule, namespaces
 
                 let createModule assemblyName (moduleName : string) methods =
-                    let simpleModuleName = moduleName.Replace(".","")
-                    let moduleId = SynComponentInfoRcd.Create (Ident.CreateLong simpleModuleName)
                     let decls = [
                         yield ``open`` "System.Reflection"
                         yield ``let private loadedAssembly = Assembly.Load`` assemblyName
@@ -496,19 +530,44 @@ type TypeSafeInternalsGenerator() =
                         for m in ms |> List.collect fst do
                             yield m
                     ]
-                    SynModuleDecl.CreateNestedModule(moduleId, decls)
+
+                    (Ident.CreateLong moduleName, decls)
+
+                let moduleTree  =
+                    [
+                        for (assembly, types) in infos do
+                            for (``type``, methods) in types do
+                                if methods |> Seq.length > 0 then
+                                    let tyFullName  = ``type``.FullName
+                                    if tyFullName.EndsWith("Exception") |> not then
+                                        yield createModule (assembly.FullName) tyFullName methods
+                    ]
+                    |> ModuleTree.fromExtractRecords
+                let rec createModulesAndClasses (moduleTree) =
+                    ([], moduleTree)
+                    ||> List.fold(fun state x ->
+                        state @
+                            match x with
+                            | ModuleTree.Module(name, mods) ->
+                                [
+                                    let name =
+                                        if name.EndsWith("Module") then name.Replace("Module", "")
+                                        else name
+                                    let moduleId = SynComponentInfoRcd.Create (Ident.CreateLong name)
+                                    let decls = createModulesAndClasses mods
+                                    SynModuleDecl.CreateNestedModule(moduleId, decls)
+                                ]
+                            | ModuleTree.Leaf (decls) ->
+                                decls
+                    )
+
+
+
                 let ``namespace`` = "TypeSafeInternals"
                 [
                     { SynModuleOrNamespaceRcd.CreateNamespace(Ident.CreateLong ``namespace``)
                         with
-                            Declarations = [
-                                for (assembly, types) in infos do
-                                    for (``type``, methods) in types do
-                                        if methods |> Seq.length > 0 then
-                                            let tyFullName  = ``type``.FullName
-                                            if tyFullName.EndsWith("Exception") |> not then
-                                                yield createModule (assembly.FullName) tyFullName methods
-                            ]
+                            Declarations = createModulesAndClasses moduleTree
                     }
                 ]
             with e ->

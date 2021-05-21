@@ -4,72 +4,74 @@
 //------------------------------------------------------------------------------
 namespace TypeSafeInternals
 
-module NpgsqlFSharpSqlModule =
-    open System.Reflection
-    let private loadedAssembly =
-        Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
+module Npgsql =
+    module FSharp =
+        module Sql =
+            open System.Reflection
+            let private loadedAssembly =
+                Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
 
-    let private loadedModule =
-        loadedAssembly.GetTypes()
-        |> Seq.find (fun (t: System.Type) -> t.FullName = "Npgsql.FSharp.SqlModule")
+            let private loadedModule =
+                loadedAssembly.GetTypes()
+                |> Seq.find (fun (t: System.Type) -> t.FullName = "Npgsql.FSharp.SqlModule")
 
-    open Npgsql.FSharp
-    open Npgsql
-    open Microsoft.FSharp.Collections
+            open Npgsql.FSharp
+            open Npgsql
+            open Microsoft.FSharp.Collections
 
-    let private p_defaultConStringCachedFunc : unit -> Sql.ConnectionStringBuilder =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity0<Sql.ConnectionStringBuilder>
-            loadedModule
-            "defaultConString"
+            let private p_defaultConStringCachedFunc : unit -> Sql.ConnectionStringBuilder =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity0<Sql.ConnectionStringBuilder>
+                    loadedModule
+                    "defaultConString"
 
-    let p_defaultConString () = p_defaultConStringCachedFunc ()
-    let private p_defaultPropsCachedFunc : unit -> Sql.SqlProps =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity0<Sql.SqlProps> loadedModule "defaultProps"
+            let p_defaultConString () = p_defaultConStringCachedFunc ()
+            let private p_defaultPropsCachedFunc : unit -> Sql.SqlProps =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity0<Sql.SqlProps> loadedModule "defaultProps"
 
-    let p_defaultProps () = p_defaultPropsCachedFunc ()
-    let private p_newConnectionCachedFunc : Sql.SqlProps -> NpgsqlConnection =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Sql.SqlProps, NpgsqlConnection>
-            loadedModule
-            "newConnection"
+            let p_defaultProps () = p_defaultPropsCachedFunc ()
+            let private p_newConnectionCachedFunc : Sql.SqlProps -> NpgsqlConnection =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Sql.SqlProps, NpgsqlConnection>
+                    loadedModule
+                    "newConnection"
 
-    let p_newConnection props = p_newConnectionCachedFunc props
-    let private p_getConnectionCachedFunc : Sql.SqlProps -> NpgsqlConnection =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Sql.SqlProps, NpgsqlConnection>
-            loadedModule
-            "getConnection"
+            let p_newConnection props = p_newConnectionCachedFunc props
+            let private p_getConnectionCachedFunc : Sql.SqlProps -> NpgsqlConnection =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Sql.SqlProps, NpgsqlConnection>
+                    loadedModule
+                    "getConnection"
 
-    let p_getConnection props = p_getConnectionCachedFunc props
-    let private p_populateRowCachedFunc : NpgsqlCommand -> list<string * SqlValue> -> unit =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2ReturningUnit<NpgsqlCommand, list<string * SqlValue>>
-            loadedModule
-            "populateRow"
+            let p_getConnection props = p_getConnectionCachedFunc props
+            let private p_populateRowCachedFunc : NpgsqlCommand -> list<string * SqlValue> -> unit =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2ReturningUnit<NpgsqlCommand, list<string * SqlValue>>
+                    loadedModule
+                    "populateRow"
 
-    let p_populateRow cmd row = p_populateRowCachedFunc cmd row
-    let private p_populateCmdCachedFunc : NpgsqlCommand -> Sql.SqlProps -> unit =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2ReturningUnit<NpgsqlCommand, Sql.SqlProps>
-            loadedModule
-            "populateCmd"
+            let p_populateRow cmd row = p_populateRowCachedFunc cmd row
+            let private p_populateCmdCachedFunc : NpgsqlCommand -> Sql.SqlProps -> unit =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2ReturningUnit<NpgsqlCommand, Sql.SqlProps>
+                    loadedModule
+                    "populateCmd"
 
-    let p_populateCmd cmd props = p_populateCmdCachedFunc cmd props
+            let p_populateCmd cmd props = p_populateCmdCachedFunc cmd props
 
-module NpgsqlFSharpUtils =
-    open System.Reflection
-    let private loadedAssembly =
-        Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
+        module Utils =
+            open System.Reflection
+            let private loadedAssembly =
+                Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
 
-    let private loadedModule =
-        loadedAssembly.GetTypes()
-        |> Seq.find (fun (t: System.Type) -> t.FullName = "Npgsql.FSharp.Utils")
+            let private loadedModule =
+                loadedAssembly.GetTypes()
+                |> Seq.find (fun (t: System.Type) -> t.FullName = "Npgsql.FSharp.Utils")
 
-    open Microsoft.FSharp.Core
-    open Npgsql.FSharp
+            open Microsoft.FSharp.Core
+            open Npgsql.FSharp
 
-    let private p_sqlMapCachedFunc<'a> : option<'a> -> ('a -> SqlValue) -> SqlValue =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2<option<'a>, ('a -> SqlValue), SqlValue>
-            loadedModule
-            "sqlMap"
+            let private p_sqlMapCachedFunc<'a> : option<'a> -> ('a -> SqlValue) -> SqlValue =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2<option<'a>, ('a -> SqlValue), SqlValue>
+                    loadedModule
+                    "sqlMap"
 
-    let p_sqlMap option f = p_sqlMapCachedFunc option f
+            let p_sqlMap option f = p_sqlMapCachedFunc option f
 
 module PostgresUri =
     open System.Reflection

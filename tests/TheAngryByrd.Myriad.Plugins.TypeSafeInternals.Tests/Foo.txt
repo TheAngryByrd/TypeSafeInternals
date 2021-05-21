@@ -1,1 +1,1 @@
-Npgsql.Fsharp
+Npgsql.FSharp

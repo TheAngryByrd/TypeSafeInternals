@@ -3,6 +3,8 @@ namespace TypeSafeInternals.Tests
 open System
 open Expecto
 open TypeSafeInternals
+open TheAngryByrd.Myriad.Plugins.TypeSafeInternals
+
 
 module SayTests =
     [<Tests>]
@@ -10,8 +12,7 @@ module SayTests =
         testList "samples" [
             testCase "Add two integerss" <| fun _ ->
 
-                // printfn "%A" <| NpgsqlFSharpSqlModule.p_defaultConStringCachedFunc ()
-                // printfn "%A" <| NpgsqlFSharpSqlModule.p_defaultConStringCachedFunc ()
-                // printfn "%A" <| NpgsqlFSharpSqlModule.p_defaultConStringCachedFunc ()
+                printfn "%A" <| Npgsql.FSharp.Sql.p_defaultProps ()
+
                 ()
         ]
