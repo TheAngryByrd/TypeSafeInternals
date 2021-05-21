@@ -9,5 +9,9 @@ module SayTests =
     let tests =
         testList "samples" [
             testCase "Add two integerss" <| fun _ ->
-                printfn "%A" <| NpgsqlFSharpSqlModule.p_defaultProps ()
+
+                // printfn "%A" <| NpgsqlFSharpSqlModule.p_defaultConStringCachedFunc ()
+                // printfn "%A" <| NpgsqlFSharpSqlModule.p_defaultConStringCachedFunc ()
+                // printfn "%A" <| NpgsqlFSharpSqlModule.p_defaultConStringCachedFunc ()
+                ()
         ]
