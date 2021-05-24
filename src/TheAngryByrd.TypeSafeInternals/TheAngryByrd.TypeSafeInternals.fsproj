@@ -4,8 +4,8 @@
     <TargetFrameworks>net5.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <Title>TypeSafeInternals</Title>
-    <Description>TypeSafeInternals does the thing!</Description>
+    <Title>TheAngryByrd.TypeSafeInternals</Title>
+    <Description>TheAngryByrd.TypeSafeInternals uses Myriad to generate type safe reflection calls to internal functions/properties/methods</Description>
 
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">

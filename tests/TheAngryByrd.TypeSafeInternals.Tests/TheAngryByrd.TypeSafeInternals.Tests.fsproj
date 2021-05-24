@@ -6,7 +6,7 @@
         <GenerateProgramFile>false</GenerateProgramFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="../../src/TypeSafeInternals/TypeSafeInternals.fsproj" />
+        <ProjectReference Include="../../src/TheAngryByrd.TypeSafeInternals/TheAngryByrd.TypeSafeInternals.fsproj" />
     </ItemGroup>
         <ItemGroup>
         <Compile Include="AssemblyInfo.fs" />

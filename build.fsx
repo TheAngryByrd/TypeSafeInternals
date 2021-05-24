@@ -41,8 +41,8 @@ let environVarAsBoolOrDefault varName defaultValue =
 // Metadata and Configuration
 //-----------------------------------------------------------------------------
 
-let productName = "TypeSafeInternals"
-let sln = "TypeSafeInternals.sln"
+let productName = "TheAngryByrd.TypeSafeInternals"
+let sln = "TheAngryByrd.TypeSafeInternals.sln"
 
 
 let srcCodeGlob =

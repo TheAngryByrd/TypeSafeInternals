@@ -9,7 +9,7 @@
     </PropertyGroup>
     <ItemGroup>
 
-        <ProjectReference Include="../../src/TypeSafeInternals/TypeSafeInternals.fsproj" />
+        <ProjectReference Include="../../src/TheAngryByrd.TypeSafeInternals/TheAngryByrd.TypeSafeInternals.fsproj" />
         <ProjectReference Include="../../src/TheAngryByrd.Myriad.Plugins.TypeSafeInternals/TheAngryByrd.Myriad.Plugins.TypeSafeInternals.fsproj" />
     </ItemGroup>
         <ItemGroup>

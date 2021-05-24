@@ -4,6 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
+    <PropertyGroup>
+    <Description>TheAngryByrd.Myriad.Plugins.TypeSafeInternals uses Myriad to generate type safe reflection calls to internal functions/properties/methods</Description>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="TheAngryByrd.Myriad.Plugins.TypeSafeInternals.fs" />
@@ -14,6 +17,10 @@
       <PackagePath>%(Identity)</PackagePath>
       <Visible>true</Visible>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+
+    <ProjectReference Include="../TheAngryByrd.TypeSafeInternals/TheAngryByrd.TypeSafeInternals.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
