@@ -83,3 +83,19 @@ module Delegate =
             .CreateDelegate(typeof<Action<'input1, 'input2, 'input3, 'input4, 'input5>>)
         |> unbox<Action<'input1, 'input2, 'input3, 'input4, 'input5>>
         |> FuncConvert.FromAction
+
+
+      /// <summary>
+      /// This will generate a function based on a Getter for a Property
+      /// </summary>
+      /// <param name="ty">The type where the method resides</param>
+      /// <param name="name">The name of the Property</param>
+      /// <typeparam name="'instanceType"></typeparam>
+      /// <typeparam name="'returnType"></typeparam>
+      /// <returns></returns>
+    let createGetter<'instanceType,'returnType> (ty : Type) name =
+        ty.GetProperty(name, BindingFlagsToSeeAll)
+            .GetGetMethod(true)
+            .CreateDelegate(typeof<Func<'instanceType, 'returnType>>,null)
+        |> unbox<Func<'instanceType, 'returnType>>
+        |> FuncConvert.FromFunc

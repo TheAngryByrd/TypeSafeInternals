@@ -63,10 +63,26 @@ module Extensions =
         static member CreateStructTuple(elementTypes) = SynType.Tuple(true, elementTypes, range0)
         static member CreateVar(typar) = SynType.Var (typar, range0)
 
+module String =
+    let removeEnd (toRemove: string) (theString : string) =
+        if theString.EndsWith(toRemove) then
+            theString.Substring(0, theString.Length - toRemove.Length)
+        else
+            theString
+
 module TypeHelpers =
 
     let replacePlusWithDotInNestedTypeName (s : string) = s.Replace("+", ".")
-    let replaceModule (s : string) = s.Replace("Module", "")
+    let replaceModuleName (s : Type) =
+        if s |> FSharpType.IsModule then
+            s.Name |> String.removeEnd "Module"
+        else
+            s.Name
+    let replaceModuleFullName (s : Type) =
+        if s |> FSharpType.IsModule then
+            s.FullName |> String.removeEnd "Module"
+        else
+            s.FullName
     let handleNullStr (s : string) = if s |> isNull then "" else s
     let isNamedType(typ: Type) = not (typ.IsArray || typ.IsByRef || typ.IsPointer)
 
@@ -84,7 +100,6 @@ module TypeHelpers =
 
     let rec getFSTypeName (t : Type) =
 
-        // if t.Name = "SqlProps" then Debugging.waitForDebuggerAttached "myriad"
         if t = typeof<string> then SynType.CreateLongIdent "string", [], []
         elif t = typeof<Void> then SynType.CreateLongIdent  "unit", [] , []
         elif t = typeof<obj> then SynType.CreateLongIdent  "obj", [] , []
@@ -132,7 +147,7 @@ module TypeHelpers =
 
                 let synTy, ns, gs =
                     if t.DeclaringType.CustomAttributes |> Seq.exists(fun a -> a.AttributeType = typeof<RequireQualifiedAccessAttribute>) then
-                        SynType.CreateLongIdent $"{replaceModule t.DeclaringType.Name}.{t.Name}", [t.DeclaringType.Namespace], []
+                        SynType.CreateLongIdent $"{replaceModuleName t.DeclaringType}.{t.Name}", [t.DeclaringType.Namespace], []
                     else
                     // $"{t.DeclaringType.FullName |> replaceModule}.{t.Name}"
                     // |>  SynType.CreateLongIdent
@@ -142,7 +157,6 @@ module TypeHelpers =
                 let synTy = t.Name |> replacePlusWithDotInNestedTypeName |> SynType.CreateLongIdent
                 synTy, [t.Namespace], []
     and toFSReservatedWord (fullName) (t : Type)  =
-        // if t.Name = "a" then Debugging.waitForDebuggerAttached "myriad"
         if t = typeof<string> then  "string"
         elif t = typeof<Void> then "unit"
         elif t = typeof<obj> then  "obj"
@@ -212,6 +226,9 @@ module DSLOperators =
 open DSLOperators
 open NuGet.ProjectModel
 
+
+type ReflectedModuleName = ReflectedModuleName of string
+type ProCompiledModuleName = ProCompiledModuleName of string
 
 
 [<RequireQualifiedAccessAttribute>]
@@ -339,7 +356,7 @@ type TypeSafeInternalsGenerator() =
 
                     SynModuleDecl.CreateLet [ letBinding ]
 
-                let ``let private sqlmodule = loadedAssembly.GetTypes() |> Seq.find(fun t -> t.FullName =`` (moduleName : string) =
+                let ``let private sqlmodule = loadedAssembly.GetTypes() |> Seq.find(fun t -> t.FullName =`` (ReflectedModuleName moduleName) =
                     let leftHandSize = SynPatRcd.CreateLongIdent(LongIdentWithDots.CreateString ("loadedModule"), [])
                     let rightHandSide =
                         let instanceAndMethod =  LongIdentWithDots.Create ["loadedAssembly"; "GetTypes"]
@@ -519,7 +536,7 @@ type TypeSafeInternalsGenerator() =
 
                     synModule, namespaces
 
-                let createModule assemblyName (moduleName : string) methods =
+                let createModule assemblyName (ProCompiledModuleName pcModuleName) (moduleName : ReflectedModuleName) methods =
                     let decls = [
                         yield ``open`` "System.Reflection"
                         yield ``let private loadedAssembly = Assembly.Load`` assemblyName
@@ -531,16 +548,20 @@ type TypeSafeInternalsGenerator() =
                             yield m
                     ]
 
-                    (Ident.CreateLong moduleName, decls)
+                    (Ident.CreateLong pcModuleName, decls)
 
                 let moduleTree  =
                     [
                         for (assembly, types) in infos do
                             for (``type``, methods) in types do
                                 if methods |> Seq.length > 0 then
-                                    let tyFullName  = ``type``.FullName
-                                    if tyFullName.EndsWith("Exception") |> not then
-                                        yield createModule (assembly.FullName) tyFullName methods
+                                    if ``type``.FullName.EndsWith("Exception") |> not then
+                                        let reflectionName = ReflectedModuleName ``type``.FullName
+                                        let precompiledModuleNamed =
+                                            ProCompiledModuleName (TypeHelpers.replaceModuleFullName ``type``)
+
+                                        let assemblyName = assembly.FullName
+                                        yield createModule assemblyName precompiledModuleNamed reflectionName methods
                     ]
                     |> ModuleTree.fromExtractRecords
                 let rec createModulesAndClasses (moduleTree) =
@@ -550,9 +571,6 @@ type TypeSafeInternalsGenerator() =
                             match x with
                             | ModuleTree.Module(name, mods) ->
                                 [
-                                    let name =
-                                        if name.EndsWith("Module") then name.Replace("Module", "")
-                                        else name
                                     let moduleId = SynComponentInfoRcd.Create (Ident.CreateLong name)
                                     let decls = createModulesAndClasses mods
                                     SynModuleDecl.CreateNestedModule(moduleId, decls)
