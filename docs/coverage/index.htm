@@ -14,24 +14,183 @@
 <col />
 </colgroup>
 <tbody>
-<tr><th>Generated on:</th><td>4/15/2021 - 1:21:57 PM</td></tr>
-<tr><th>Parser:</th><td>OpenCoverParser</td></tr>
-<tr><th>Assemblies:</th><td>1</td></tr>
-<tr><th>Classes:</th><td>1</td></tr>
-<tr><th>Files:</th><td>1</td></tr>
-<tr><th>Covered lines:</th><td>4</td></tr>
-<tr><th>Uncovered lines:</th><td>0</td></tr>
-<tr><th>Coverable lines:</th><td>4</td></tr>
-<tr><th>Total lines:</th><td>56</td></tr>
-<tr><th>Line coverage:</th><td>100% (4 of 4)</td></tr>
+<tr><th>Generated on:</th><td>5/24/2021 - 5:01:14 PM</td></tr>
+<tr><th>Parser:</th><td>MultiReportParser (3x OpenCoverParser)</td></tr>
+<tr><th>Assemblies:</th><td>3</td></tr>
+<tr><th>Classes:</th><td>10</td></tr>
+<tr><th>Files:</th><td>3</td></tr>
+<tr><th>Covered lines:</th><td>21</td></tr>
+<tr><th>Uncovered lines:</th><td>525</td></tr>
+<tr><th>Coverable lines:</th><td>546</td></tr>
+<tr><th>Total lines:</th><td>815</td></tr>
+<tr><th>Line coverage:</th><td>3.8% (21 of 546)</td></tr>
 <tr><th>Covered branches:</th><td>0</td></tr>
-<tr><th>Total branches:</th><td>0</td></tr>
+<tr><th>Total branches:</th><td>192</td></tr>
+<tr><th>Branch coverage:</th><td>0% (0 of 192)</td></tr>
 </tbody>
 </table>
 <h1>Risk Hotspots</h1>
 <risk-hotspots>
+<table class="overview table-fixed stripped">
+<colgroup>
+<col />
+<col />
+<col />
+<col class="column105" />
+<col class="column105" />
+<col class="column105" />
+</colgroup>
+<thead><tr><th>Assembly</th>
+<th>Class</th>
+<th>Method</th>
+<th>Cyclomatic complexity <a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon-info-circled"></i></a></th>
+<th>NPath complexity <a href="https://modess.io/npath-complexity-cyclomatic-complexity-explained"><i class="icon-info-circled"></i></a></th>
+<th>Crap Score <a href="https://googletesting.blogspot.de/2011/02/this-code-is-crap.html"><i class="icon-info-circled"></i></a></th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers</a></td>
+<td title="System.Tuple`2&lt;FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1&lt;System.String&gt;&gt; TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers::getFSTypeName(System.Type)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm#file0_line98">getFSTypeName(...)</a></td><td class="lightgreen right">26</td>
+<td class="lightred right">16777216</td>
+<td class="lightred right">702</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers</a></td>
+<td title="System.String TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers::toFSReservatedWord(System.Boolean,System.Type)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm#file0_line153">toFSReservatedWord(...)</a></td><td class="lightgreen right">20</td>
+<td class="lightred right">262144</td>
+<td class="lightred right">420</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Int32 &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/parameterSynTypesAndNamespaces@533::GenerateNext(System.Collections.Generic.IEnumerable`1&lt;System.Tuple`2&lt;FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1&lt;System.String&gt;&gt;&gt;&amp;)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line533">GenerateNext(...)</a></td><td class="lightgreen right">13</td>
+<td class="lightgreen right">64</td>
+<td class="lightred right">182</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Int32 &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/generics@569-2::GenerateNext(System.Collections.Generic.IEnumerable`1&lt;System.Tuple`2&lt;FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1&lt;System.String&gt;&gt;&gt;&amp;)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line569">GenerateNext(...)</a></td><td class="lightgreen right">12</td>
+<td class="lightgreen right">64</td>
+<td class="lightred right">156</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Int32 &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/genericNames@515-5::GenerateNext(System.Collections.Generic.IEnumerable`1&lt;System.Tuple`2&lt;FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1&lt;System.String&gt;&gt;&gt;&amp;)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line515">GenerateNext(...)</a></td><td class="lightgreen right">11</td>
+<td class="lightgreen right">32</td>
+<td class="lightred right">132</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Void &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/parameterSynTypesAndNamespaces@533::Close()"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line533">Close()</a></td><td class="lightgreen right">11</td>
+<td class="lightgreen right">0</td>
+<td class="lightred right">132</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Void &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/staticMethodDecls@642::Close()"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line642">Close()</a></td><td class="lightgreen right">11</td>
+<td class="lightgreen right">0</td>
+<td class="lightred right">132</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Void &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/genericNames@515-5::Close()"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line515">Close()</a></td><td class="lightgreen right">10</td>
+<td class="lightgreen right">0</td>
+<td class="lightred right">110</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Void &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/generics@569-2::Close()"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line569">Close()</a></td><td class="lightgreen right">10</td>
+<td class="lightgreen right">0</td>
+<td class="lightred right">110</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Int32 &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleTree@677::GenerateNext(System.Collections.Generic.IEnumerable`1&lt;System.Tuple`2&lt;Microsoft.FSharp.Collections.FSharpList`1&lt;FSharp.Compiler.SyntaxTree/Ident&gt;,Microsoft.FSharp.Collections.FSharpList`1&lt;FSharp.Compiler.SyntaxTree/SynModuleDecl&gt;&gt;&gt;&amp;)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line677">GenerateNext(...)</a></td><td class="lightgreen right">10</td>
+<td class="lightgreen right">16</td>
+<td class="lightred right">110</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Void &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleTree@677::Close()"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line677">Close()</a></td><td class="lightgreen right">10</td>
+<td class="lightgreen right">0</td>
+<td class="lightred right">110</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Void &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleInfos@353::Close()"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line353">Close()</a></td><td class="lightgreen right">9</td>
+<td class="lightgreen right">0</td>
+<td class="lightred right">90</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Void &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/infos@348::Close()"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line348">Close()</a></td><td class="lightgreen right">9</td>
+<td class="lightgreen right">0</td>
+<td class="lightred right">90</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Void &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/createRecordGetters@431-1::Close()"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line431">Close()</a></td><td class="lightgreen right">9</td>
+<td class="lightgreen right">0</td>
+<td class="lightred right">90</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Void &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/visibleInternalRecordsDecls@652::Close()"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line652">Close()</a></td><td class="lightgreen right">9</td>
+<td class="lightgreen right">0</td>
+<td class="lightred right">90</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Int32 &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/staticMethodDecls@642::GenerateNext(System.Collections.Generic.IEnumerable`1&lt;FSharp.Compiler.SyntaxTree/SynModuleDecl&gt;&amp;)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line642">GenerateNext(...)</a></td><td class="lightgreen right">8</td>
+<td class="lightgreen right">2</td>
+<td class="lightred right">72</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_ModuleTreeModule.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTreeModule</a></td>
+<td title="Microsoft.FSharp.Collections.FSharpList`1&lt;TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTree&gt; TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTreeModule/addHeadPath@243T::Invoke(System.Tuple`2&lt;a,Microsoft.FSharp.Collections.FSharpList`1&lt;Microsoft.FSharp.Collections.FSharpList`1&lt;FSharp.Compiler.SyntaxTree/SynModuleDecl&gt;&gt;&gt;,System.String,Microsoft.FSharp.Collections.FSharpList`1&lt;System.String&gt;,Microsoft.FSharp.Collections.FSharpList`1&lt;TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTree&gt;)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_ModuleTreeModule.htm#file0_line244">Invoke(...)</a></td><td class="lightgreen right">6</td>
+<td class="lightgreen right">24</td>
+<td class="lightred right">42</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Reflection.Assembly &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/Myriad-Core-IMyriadGenerator-Generate@315::Invoke(System.Object,System.ResolveEventArgs)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line316">Invoke(...)</a></td><td class="lightgreen right">6</td>
+<td class="lightgreen right">32</td>
+<td class="lightred right">42</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Int32 &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleInfos@353::GenerateNext(System.Collections.Generic.IEnumerable`1&lt;TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleInfos&gt;&amp;)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line353">GenerateNext(...)</a></td><td class="lightgreen right">6</td>
+<td class="lightgreen right">2</td>
+<td class="lightred right">42</td>
+</tr>
+<tr>
+<td>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</td>
+<td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td>
+<td title="System.Int32 &lt;StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals&gt;.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/infos@348::GenerateNext(System.Collections.Generic.IEnumerable`1&lt;TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ToGenerate&gt;&amp;)"><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm#file0_line348">GenerateNext(...)</a></td><td class="lightgreen right">6</td>
+<td class="lightgreen right">2</td>
+<td class="lightred right">42</td>
+</tr>
+</tbody>
+</table>
 </risk-hotspots>
-<p>No risk hotspots found.</p>
 <h1>Coverage</h1>
 <coverage-info>
 <table class="overview table-fixed stripped">
@@ -48,11 +207,22 @@
 </colgroup>
 <thead><tr><th>Name</th><th class="right">Covered</th><th class="right">Uncovered</th><th class="right">Coverable</th><th class="right">Total</th><th class="center" colspan="2">Line coverage</th><th class="center" colspan="2">Branch coverage</th></tr></thead>
 <tbody>
-<tr><th>TypeSafeInternals</th><th class="right">4</th><th class="right">0</th><th class="right">4</th><th class="right">56</th><th title="LineCoverage" class="right">100%</th><th><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></th><th class="right"></th><th><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></th></tr>
-<tr><td><a href="TypeSafeInternals_Say.htm">TypeSafeInternals.Say</a></td><td class="right">4</td><td class="right">0</td><td class="right">4</td><td class="right">56</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><th>TheAngryByrd.Myriad.Plugins.TypeSafeInternals</th><th class="right">0</th><th class="right">489</th><th class="right">489</th><th class="right">5712</th><th title="LineCoverage" class="right">0%</th><th><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></th><th class="right">0%</th><th><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></th></tr>
+<tr><td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_Debugging.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.Debugging</a></td><td class="right">0</td><td class="right">7</td><td class="right">7</td><td class="right">714</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_DSL.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.DSL</a></td><td class="right">0</td><td class="right">11</td><td class="right">11</td><td class="right">714</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_DSLOperators.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.DSLOperators</a></td><td class="right">0</td><td class="right">1</td><td class="right">1</td><td class="right">714</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_Extensions.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.Extensions</a></td><td class="right">0</td><td class="right">20</td><td class="right">20</td><td class="right">714</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_ModuleTreeModule.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTreeModule</a></td><td class="right">0</td><td class="right">16</td><td class="right">16</td><td class="right">714</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_String.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.String</a></td><td class="right">0</td><td class="right">3</td><td class="right">3</td><td class="right">714</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers</a></td><td class="right">0</td><td class="right">82</td><td class="right">82</td><td class="right">714</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm">TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator</a></td><td class="right">0</td><td class="right">349</td><td class="right">349</td><td class="right">714</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
+<tr><th>TheAngryByrd.TypeSafeInternals</th><th class="right">17</th><th class="right">36</th><th class="right">53</th><th class="right">101</th><th title="LineCoverage" class="right">32%</th><th><table class="coverage"><tr><td class="green covered32">&nbsp;</td><td class="red covered68">&nbsp;</td></tr></table></th><th class="right"></th><th><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></th></tr>
+<tr><td><a href="TheAngryByrd.TypeSafeInternals_Delegate.htm">TheAngryByrd.TypeSafeInternals.Delegate</a></td><td class="right">17</td><td class="right">36</td><td class="right">53</td><td class="right">101</td><td title="LineCoverage" class="right">32%</td><td><table class="coverage"><tr><td class="green covered32">&nbsp;</td><td class="red covered68">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><th>TypeSafeInternals</th><th class="right">4</th><th class="right">0</th><th class="right">4</th><th class="right">0</th><th title="LineCoverage" class="right">100%</th><th><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></th><th class="right"></th><th><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></th></tr>
+<tr><td><a href="TypeSafeInternals_Say.htm">TypeSafeInternals.Say</a></td><td class="right">4</td><td class="right">0</td><td class="right">4</td><td class="right">0</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
 </tbody>
 </table>
 </coverage-info>
-<div class="footer">Generated by: ReportGenerator 4.2.15.0<br />4/15/2021 - 1:21:57 PM<br /><a href="https://github.com/danielpalme/ReportGenerator">GitHub</a> | <a href="http://www.palmmedia.de">www.palmmedia.de</a></div></div></div>
+<div class="footer">Generated by: ReportGenerator 4.2.15.0<br />5/24/2021 - 5:01:14 PM<br /><a href="https://github.com/danielpalme/ReportGenerator">GitHub</a> | <a href="http://www.palmmedia.de">www.palmmedia.de</a></div></div></div>
 <script type="text/javascript" src="main.js"></script>
 </body></html>

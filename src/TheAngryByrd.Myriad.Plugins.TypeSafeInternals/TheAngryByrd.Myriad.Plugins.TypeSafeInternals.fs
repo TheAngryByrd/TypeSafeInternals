@@ -304,7 +304,7 @@ type TypeSafeInternalsGenerator() =
                         l.CompileTimeAssemblies
                         |> Seq.collect(fun c ->
                             lockfile.PackageFolders
-                            |> Seq.map(fun p -> IO.Path.Join(p.Path, lib.Path, c.Path))
+                            |> Seq.map(fun p -> IO.Path.Combine(p.Path, lib.Path, c.Path))
                             |> Seq.filter(fun f -> IO.File.Exists f)
                         )
                     )

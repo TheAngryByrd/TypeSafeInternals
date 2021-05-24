@@ -2,22 +2,22 @@
 namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("TypeSafeInternals.Tests")>]
-[<assembly: AssemblyProductAttribute("TypeSafeInternals")>]
+[<assembly: AssemblyTitleAttribute("TheAngryByrd.Myriad.Plugins.TypeSafeInternals.Tests")>]
+[<assembly: AssemblyProductAttribute("TheAngryByrd.TypeSafeInternals")>]
 [<assembly: AssemblyVersionAttribute("0.1.0")>]
-[<assembly: AssemblyMetadataAttribute("ReleaseDate","2017-03-17T00:00:00.0000000")>]
+[<assembly: AssemblyMetadataAttribute("ReleaseDate","2021-05-24T00:00:00.0000000-04:00")>]
 [<assembly: AssemblyFileVersionAttribute("0.1.0")>]
 [<assembly: AssemblyInformationalVersionAttribute("0.1.0")>]
-[<assembly: AssemblyMetadataAttribute("ReleaseChannel","release")>]
-[<assembly: AssemblyMetadataAttribute("GitHash","269fb0305ac37531bad75a6b00a0af7653776a23")>]
+[<assembly: AssemblyMetadataAttribute("ReleaseChannel","beta")>]
+[<assembly: AssemblyMetadataAttribute("GitHash","200b44716081ccdb3efe1256e241c61286b5a658")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] AssemblyTitle = "TypeSafeInternals.Tests"
-    let [<Literal>] AssemblyProduct = "TypeSafeInternals"
+    let [<Literal>] AssemblyTitle = "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.Tests"
+    let [<Literal>] AssemblyProduct = "TheAngryByrd.TypeSafeInternals"
     let [<Literal>] AssemblyVersion = "0.1.0"
-    let [<Literal>] AssemblyMetadata_ReleaseDate = "2017-03-17T00:00:00.0000000"
+    let [<Literal>] AssemblyMetadata_ReleaseDate = "2021-05-24T00:00:00.0000000-04:00"
     let [<Literal>] AssemblyFileVersion = "0.1.0"
     let [<Literal>] AssemblyInformationalVersion = "0.1.0"
-    let [<Literal>] AssemblyMetadata_ReleaseChannel = "release"
-    let [<Literal>] AssemblyMetadata_GitHash = "269fb0305ac37531bad75a6b00a0af7653776a23"
+    let [<Literal>] AssemblyMetadata_ReleaseChannel = "beta"
+    let [<Literal>] AssemblyMetadata_GitHash = "200b44716081ccdb3efe1256e241c61286b5a658"
