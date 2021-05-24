@@ -1,4 +1,5 @@
 open Argu
+open System.IO.Compression
 #load ".fake/build.fsx/intellisense.fsx"
 #load "docsTool/CLI.fs"
 #if !FAKE
@@ -528,22 +529,77 @@ let generateAssemblyInfo _ =
         | Vbproj -> AssemblyInfoFile.createVisualBasic ((folderName @@ "My Project") @@ "AssemblyInfo.vb") attributes
         )
 
+
+[<AllowNullLiteral>]
+type private DisposableDirectory (directory : string) =
+    static member Create() =
+        let tempPath = IO.Path.Combine(IO.Path.GetTempPath(), Guid.NewGuid().ToString("n"))
+        Trace.tracefn "Creating disposable directory %s" tempPath
+        IO.Directory.CreateDirectory tempPath |> ignore
+        new DisposableDirectory(tempPath)
+    member x.DirectoryInfo = IO.DirectoryInfo(directory)
+    interface IDisposable with
+        member x.Dispose() =
+            Trace.tracefn "Deleting disposable directory %s" x.DirectoryInfo.FullName
+            IO.Directory.Delete(x.DirectoryInfo.FullName,true)
+
 let dotnetPack ctx =
-    // Get release notes with properly-linked version number
-    let releaseNotes = latestEntry |> Changelog.mkReleaseNotes linkReferenceForLatestEntry
+    let pack configuration args proj=
+        DotNet.pack (fun c ->
+            { c with
+                Configuration = configuration
+                OutputPath = Some distDir
+                Common =
+                    c.Common
+                    |> DotNet.Options.withAdditionalArgs args
+            }) proj
+
+    let getTargetFramework (proj : string) =
+        let projDoc = System.Xml.XmlDocument()
+        projDoc.Load(proj)
+        projDoc.GetElementsByTagName("TargetFramework").ItemOf(0).InnerText
+
+    let configuration = configuration (ctx.Context.AllExecutingTargets)
     let args =
         [
             sprintf "/p:PackageVersion=%s" latestEntry.NuGetVersion
-            sprintf "/p:PackageReleaseNotes=\"%s\"" releaseNotes
+            sprintf "/p:PackageReleaseNotes=\"%s\"" (latestEntry |> Changelog.mkReleaseNotes linkReferenceForLatestEntry)
         ]
-    DotNet.pack (fun c ->
-        { c with
-            Configuration = configuration (ctx.Context.AllExecutingTargets)
-            OutputPath = Some distDir
-            Common =
-                c.Common
-                |> DotNet.Options.withAdditionalArgs args
-        }) sln
+    !! srcGlob
+    |> Seq.map(fun proj -> pack configuration args proj ; proj)
+    |> Seq.filter(fun proj -> proj.Contains "Myriad.Plugins")
+    |> Seq.iter(fun proj ->
+        // Myriad Plugins need some additional work to bundle 3rd party dependencies: see https://github.com/ionide/FSharp.Analyzers.SDK#packaging-and-distribution
+        let publishFramework = getTargetFramework proj
+        DotNet.publish (fun c ->
+            { c with
+                Configuration = configuration
+                Framework = Some (publishFramework)
+            }) proj
+
+        let nupkg =
+            let projectName = IO.Path.GetFileNameWithoutExtension proj
+            IO.Directory.GetFiles distDir
+            |> Seq.filter(fun path -> path.Contains projectName)
+            |> Seq.tryExactlyOne
+            |> Option.defaultWith(fun () -> failwithf "Could not find corresponsiding nuget package with name containing %s" projectName )
+            |> IO.FileInfo
+
+        let publishPath = IO.FileInfo(proj).Directory.FullName </> "bin" </> (string configuration) </> publishFramework </> "publish"
+
+        use dd = DisposableDirectory.Create()
+         // Unzip the nuget
+        ZipFile.ExtractToDirectory(nupkg.FullName, dd.DirectoryInfo.FullName)
+        // delete the initial nuget package
+        nupkg.Delete()
+        // remove stuff from ./lib/{{publishFramework}}
+        Shell.deleteDir (dd.DirectoryInfo.FullName </> "lib" </> publishFramework)
+        // move the output of publish folder into the ./lib/{{publishFramework}} directory
+        Shell.copyDir (dd.DirectoryInfo.FullName </> "lib" </> publishFramework) publishPath (fun _ -> true)
+        // re-create the nuget package
+        ZipFile.CreateFromDirectory(dd.DirectoryInfo.FullName, nupkg.FullName)
+    )
+
 
 let sourceLinkTest _ =
     !! distGlob
