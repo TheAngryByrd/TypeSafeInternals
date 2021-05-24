@@ -73,17 +73,12 @@ module String =
 module TypeHelpers =
 
     let replacePlusWithDotInNestedTypeName (s : string) = s.Replace("+", ".")
-    let replaceModuleName (s : Type) =
-        if s |> FSharpType.IsModule then
-            s.Name |> String.removeEnd "Module"
-        else
-            s.Name
+
     let replaceModuleFullName (s : Type) =
         if s |> FSharpType.IsModule then
             s.FullName |> String.removeEnd "Module"
         else
             s.FullName
-    let handleNullStr (s : string) = if s |> isNull then "" else s
     let isNamedType(typ: Type) = not (typ.IsArray || typ.IsByRef || typ.IsPointer)
 
     let equivHeadTypes (ty1: Type) (ty2: Type) =
@@ -100,33 +95,33 @@ module TypeHelpers =
 
     let rec getFSTypeName (t : Type) =
 
-        if t = typeof<string> then SynType.CreateLongIdent "string", [], []
-        elif t = typeof<Void> then SynType.CreateLongIdent  "unit", [] , []
-        elif t = typeof<obj> then SynType.CreateLongIdent  "obj", [] , []
-        elif t = typeof<char> then SynType.CreateLongIdent  "char", [] , []
-        elif t = typeof<int16> then SynType.CreateLongIdent "int16", [] , []
-        elif t = typeof<int32> then SynType.CreateLongIdent  "int32", [] , []
-        elif t = typeof<int64> then SynType.CreateLongIdent "int64", [] , []
-        elif t = typeof<uint16> then SynType.CreateLongIdent "uint16", [] , []
-        elif t = typeof<uint32> then SynType.CreateLongIdent "uint32", [] , []
-        elif t = typeof<uint64> then SynType.CreateLongIdent "uint64", [] , []
-        elif t = typeof<float> then SynType.CreateLongIdent "float", [] , []
-        elif t = typeof<float32> then SynType.CreateLongIdent "float32", [] , []
-        elif t = typeof<single> then SynType.CreateLongIdent "single", [] , []
-        elif t = typeof<double> then SynType.CreateLongIdent "dpuble", [] , []
-        elif t = typeof<decimal> then SynType.CreateLongIdent "decimal", [] , []
+        if t = typeof<string> then SynType.CreateLongIdent "string",  []
+        elif t = typeof<Void> then SynType.CreateLongIdent  "unit",  []
+        elif t = typeof<obj> then SynType.CreateLongIdent  "obj",  []
+        elif t = typeof<char> then SynType.CreateLongIdent  "char",  []
+        elif t = typeof<int16> then SynType.CreateLongIdent "int16",  []
+        elif t = typeof<int32> then SynType.CreateLongIdent  "int32",  []
+        elif t = typeof<int64> then SynType.CreateLongIdent "int64",  []
+        elif t = typeof<uint16> then SynType.CreateLongIdent "uint16",  []
+        elif t = typeof<uint32> then SynType.CreateLongIdent "uint32",  []
+        elif t = typeof<uint64> then SynType.CreateLongIdent "uint64",  []
+        elif t = typeof<float> then SynType.CreateLongIdent "float",  []
+        elif t = typeof<float32> then SynType.CreateLongIdent "float32",  []
+        elif t = typeof<single> then SynType.CreateLongIdent "single",  []
+        elif t = typeof<double> then SynType.CreateLongIdent "dpuble",  []
+        elif t = typeof<decimal> then SynType.CreateLongIdent "decimal", []
         elif t.IsGenericMethodParameter then
             let synTy =
                 Typar(Ident.Create t.Name, NoStaticReq, false)
                 |> SynType.CreateVar
-            synTy, [t.Namespace], [t.Name]
+            synTy, [t.Name]
         elif FSharpType.IsFunction t then
             let domain,range = FSharpType.GetFunctionElements t
-            let (arg1,ns1,generics1) = getFSTypeName domain
-            let arg2, ns2, generics2 = getFSTypeName range
+            let (arg1,generics1) = getFSTypeName domain
+            let arg2, generics2 = getFSTypeName range
             let synTy = SynType.CreateParen(SynType.CreateFun (arg1, arg2))
 
-            synTy, ns1 @ ns2, (generics1 @ generics2)
+            synTy, (generics1 @ generics2)
         elif FSharpType.IsTuple t then
             let types =
                 t.GetGenericArguments()
@@ -134,28 +129,26 @@ module TypeHelpers =
                 |> Array.toList
             let synTy =
                 types
-                |> List.map (fun (synTy,_, _) -> false, synTy)
+                |> List.map (fun (synTy, _) -> false, synTy)
                 |> SynType.CreateTuple
 
-            synTy, types |> List.collect (fun (_,ns,_) -> ns), types |> List.collect (fun (_,_,gs) -> gs)
+            synTy, types |> List.collect (fun (_,gs) -> gs)
         elif t.IsGenericType then toGenericTypeString t
         elif t.IsArray then
-            let synTy, ns, gs = t.GetElementType() |> getFSTypeName
-            (SynType.CreateArray synTy), ns, gs
+            let synTy, gs = t.GetElementType() |> getFSTypeName
+            (SynType.CreateArray synTy), gs
         else
             if t.DeclaringType <> null && t.DeclaringType |> FSharpType.IsModule then
 
-                let synTy, ns, gs =
+                let synTy,  gs =
                     if t.DeclaringType.CustomAttributes |> Seq.exists(fun a -> a.AttributeType = typeof<RequireQualifiedAccessAttribute>) then
-                        SynType.CreateLongIdent $"{replaceModuleName t.DeclaringType}.{t.Name}", [t.DeclaringType.Namespace], []
+                        SynType.CreateLongIdent $"{replaceModuleFullName t.DeclaringType}.{t.Name}", []
                     else
-                    // $"{t.DeclaringType.FullName |> replaceModule}.{t.Name}"
-                    // |>  SynType.CreateLongIdent
-                        SynType.CreateLongIdent t.Name, [t.Namespace], []
-                synTy, ns, gs
+                        SynType.CreateLongIdent t.FullName, []
+                synTy,  gs
             else
-                let synTy = t.Name |> replacePlusWithDotInNestedTypeName |> SynType.CreateLongIdent
-                synTy, [t.Namespace], []
+                let synTy = t.FullName |> replacePlusWithDotInNestedTypeName |> SynType.CreateLongIdent
+                synTy, []
     and toFSReservatedWord (fullName) (t : Type)  =
         if t = typeof<string> then  "string"
         elif t = typeof<Void> then "unit"
@@ -181,11 +174,10 @@ module TypeHelpers =
             t.GetGenericArguments()
             |> Seq.map (getFSTypeName)
             |> Seq.toList
-        let namespaces = typeArgs |> List.collect (fun (_,ns,_) -> ns)
-        let generics =  typeArgs |> List.collect (fun (_,_,gs) -> gs)
+        let generics =  typeArgs |> List.collect (fun (_,gs) -> gs)
         let synTy =
-            SynType.CreateApp((toFSReservatedWord false t  |> SynType.CreateLongIdent), typeArgs |> List.map (fun (ts,_,_) -> ts))
-        synTy, t.Namespace :: namespaces, generics
+            SynType.CreateApp((toFSReservatedWord false t  |> SynType.CreateLongIdent), typeArgs |> List.map (fun (ts,_) -> ts))
+        synTy, generics
 
 
 module DSL =
@@ -201,7 +193,7 @@ module DSL =
 
 
     let private pipeRightIdent = Ident.Create "op_PipeRight"
-    // Creates : {{synExpr1}} |> {{synExpr2}}
+    /// Creates : {{synExpr1}} |> {{synExpr2}}
     let pipeRight synExpr2 synExpr1 =
         SynExpr.CreateApp(SynExpr.CreateAppInfix(SynExpr.CreateIdent pipeRightIdent, synExpr1), synExpr2)
 
@@ -217,6 +209,10 @@ module DSL =
         let binding = SynBinding.Binding(None, SynBindingKind.NormalBinding, false, false, [], PreXmlDoc.Empty, emptySynValData, headPat, None, rightSide, range0, DebugPointForBinding.DebugPointAtBinding range0 )
         SynExpr.LetOrUse(false, false, [binding], continuation, range0)
 
+
+    let createTypeOf (ty : SynType) =
+        let typeOf = SynExpr.CreateIdentString "typeof"
+        SynExpr.CreateTypeApp typeOf [ty]
 
 module DSLOperators =
     ///Infix for SynExpr.CreateApp(funcExpr, argExpr)
@@ -263,6 +259,17 @@ module ModuleTree =
             addPath (moduleIdent, [synTypeDefns]) pathParts state
         )
 
+
+type ModuleInfos = {
+    Type : Type
+    StaticMethods : MethodInfo list
+    VisibleInternalRecords : Type list
+}
+
+type ToGenerate = {
+    Assembly : Assembly
+    ModuleInfos : ModuleInfos list
+}
 
 [<MyriadGenerator("theangrybyrd.typesafeinternals")>]
 type TypeSafeInternalsGenerator() =
@@ -311,7 +318,7 @@ type TypeSafeInternalsGenerator() =
                         match AppDomain.CurrentDomain.GetAssemblies() |> Seq.tryFind(fun a -> a.FullName = args.Name) with
                         | Some a -> a
                         | None ->
-                            // Npgsql, Version=4.1.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7
+                            // For example: Npgsql, Version=4.1.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7
                             let toLoad =
                                 match args.Name.Split(',') |> Array.toList with
                                 | name::version::_ -> {|Name = name; Version= parseVersion version |}
@@ -335,15 +342,31 @@ type TypeSafeInternalsGenerator() =
                     "@"
                     "|"
                 ]
-                let infos =
-                    assemblies
-                    |> List.map(Assembly.Load)
-                    |> List.map(fun a -> a, a.GetTypes())
-                    |> List.map(fun (a, tys) -> a, tys |> Seq.filter(fun t -> moduleFilterTypes |> Seq.exists t.FullName.Contains |> not ) |> Seq.map(fun t -> t, t.GetMethods(bindingFlagsToSeeAll) |> Seq.filter(fun t -> functionFilterTypes |> Seq.exists t.Name.Contains |> not ) |> Seq.filter(fun mi -> mi.IsPublic |> not && mi.IsStatic)))
 
+                let infos =
+                    [
+                        for assemblyName in assemblies do
+                            let assembly  = Assembly.Load assemblyName
+                            let types = assembly.GetTypes()
+                            let cleanTys = types |> Seq.filter(fun t -> moduleFilterTypes |> Seq.exists t.FullName.Contains |> not ) |> Seq.filter(fun t -> t |> FSharpType.IsModule)
+                            let moduleInfos = [
+                                for ty in cleanTys do
+                                    let staticMethods =
+                                        ty.GetMethods(bindingFlagsToSeeAll)
+                                        |> Array.filter(fun mi -> functionFilterTypes |> List.exists mi.Name.Contains |> not )
+                                        |> Array.filter(fun mi -> mi.IsPublic |> not && mi.IsStatic)
+                                        |> Array.toList
+                                    let visibleInternalRecords =
+                                        ty.GetNestedTypes()
+                                        |> Array.filter(fun ty -> Reflection.FSharpType.IsRecord(ty,BindingFlags.NonPublic) && ty.IsVisible)
+                                        |> Array.toList
+                                    yield { Type = ty; StaticMethods = staticMethods; VisibleInternalRecords = visibleInternalRecords}
+                            ]
+                            yield {Assembly = assembly; ModuleInfos = moduleInfos}
+                    ]
 
                 let ``let private loadedAssembly = Assembly.Load`` assemblyName =
-                    let funcExpr = SynExpr.CreateLongIdent <| LongIdentWithDots.CreateString ("Assembly.Load")
+                    let funcExpr = SynExpr.CreateLongIdent <| LongIdentWithDots.CreateString ("System.Reflection.Assembly.Load")
                     let argExpr = SynExpr.CreateParenedTuple [SynExpr.CreateConst <| SynConst.CreateString assemblyName]
                     let leftHandSize = SynPatRcd.CreateLongIdent(LongIdentWithDots.CreateString ("loadedAssembly"), [])
                     let rightHandSide =  funcExpr <@> argExpr
@@ -385,53 +408,52 @@ type TypeSafeInternalsGenerator() =
                 let ``open`` ``namespace`` =
                     DSL.openNamespace (DSL.createLongIdentWithDots ``namespace``)
 
+                let createTypeOf (ty: Type) =
+                    let leftHandSide = SynPatRcd.CreateLongIdent(LongIdentWithDots.CreateString ("loadedType"), [])
 
 
-                let createStaticMethod (mi : MethodInfo) =
+                    let rightHandSide =
+                        TypeHelpers.getFSTypeName ty
+                        |> fst
+                        |> DSL.createTypeOf
 
-                    let miParams = mi.GetParameters()
+                    {SynBindingRcd.Let
+                        with
+                            Expr = rightHandSide
+                            Pattern = leftHandSide
+                            Access = Some SynAccess.Private }
+                    |> List.singleton
+                    |> SynModuleDecl.CreateLet
 
-                    let getPrivateFuncName name =
-                        $"p_%s{name}"
-                    let getCachedFuncName name =
-                        $"{getPrivateFuncName(name)}CachedFunc"
-                    let (synModule, namespaces) =
+                let createRecordGetters (ty : Type) =
+                    let getters = ty.GetProperties(BindingFlags.Instance ||| BindingFlags.NonPublic)
+                    [
+                        for getter in getters do
 
-                        let cachedCall, namespaces =
+
+
                             let leftHandSide =
                                 let genericNames =
                                     seq {
-                                        yield! miParams
-                                                |> Array.map(fun p -> p.ParameterType)
-                                                |> Array.map TypeHelpers.getFSTypeName
-                                        yield mi.ReturnType
+                                        yield getter.PropertyType
                                                 |> TypeHelpers.getFSTypeName
                                     }
-                                    |> Seq.collect(fun (_,_,gs) -> gs)
+                                    |> Seq.collect(fun (_,gs) -> gs)
                                     |> Seq.distinct
                                     |> Seq.map(fun name -> SynTyparDecl.TyparDecl(SynAttributes.Empty, SynTypar.Typar(Ident.Create name, NoStaticReq, false)))
                                     |> Seq.toList
 
                                 let functionGenerics = SynValTyparDecls.SynValTyparDecls(genericNames, false, [])
-                                SynPat.LongIdent(LongIdentWithDots.CreateString (getCachedFuncName mi.Name), None, Some functionGenerics, SynArgPats.Empty, Some SynAccess.Private, range0).ToRcd
+                                SynPat.LongIdent(LongIdentWithDots.CreateString ($"get_{getter.Name}"), None, Some functionGenerics, SynArgPats.Empty, None, range0).ToRcd
 
 
-                            let (returnInfo, retInfoNamespaces) =
+                            let returnInfo =
                                 let parameterSynTypesAndNamespaces =
-                                    seq {
-                                        if miParams.Length > 0 then
-                                            yield! miParams
-                                                    |> Array.map(fun p -> p.ParameterType)
-                                                    |> Array.map TypeHelpers.getFSTypeName
-                                        else
-                                            yield (SynType.CreateUnit, [], [])
-
-                                        yield
-                                            mi.ReturnType
-                                            |> TypeHelpers.getFSTypeName
-                                    } |> Seq.toList
-                                let namespaces = parameterSynTypesAndNamespaces |> List.collect (fun (_,ns,_)-> ns)
-                                let parameters = parameterSynTypesAndNamespaces |> List.map (fun (ts,_,_)-> ts)
+                                    [
+                                        ty |> TypeHelpers.getFSTypeName
+                                        getter.PropertyType|> TypeHelpers.getFSTypeName
+                                    ]
+                                let parameters = parameterSynTypesAndNamespaces |> List.map (fun (ts,_)-> ts)
                                 let rec createReturnInfoType state list =
                                     match state, list with
                                     | None, head::shoulders::tail ->
@@ -444,10 +466,98 @@ type TypeSafeInternalsGenerator() =
                                     | None, [] -> SynType.CreateUnit
                                     | Some state, [] -> state
 
-                                (parameters |> createReturnInfoType None), namespaces
+                                (parameters |> createReturnInfoType None)
 
-                            let (rightHandSide, rightHandNamespaces) =
-                                let (funcExpr , namespaces) =
+                            let rightHandSide =
+                                let funcExpr  =
+                                    let getterFunc  =
+                                            "TheAngryByrd.TypeSafeInternals.Delegate.createGetter"
+
+                                    let generics =
+                                        seq {
+                                            ty |> TypeHelpers.getFSTypeName
+                                            getter.PropertyType |> TypeHelpers.getFSTypeName
+                                        } |> Seq.toList
+                                    let synExpr =  SynExpr.CreateTypeApp (SynExpr.CreateLongIdent <| LongIdentWithDots.CreateString (getterFunc))  (generics |> List.map (fun (ts,_) -> ts))
+                                    synExpr
+                                let argsExpr = SynExpr.CreateIdent <| Ident.Create "loadedType"
+                                let argsExpr2 = SynExpr.CreateConst <| SynConst.CreateString getter.Name
+
+                                let curriedFunc = funcExpr <@> argsExpr <@> argsExpr2
+                                curriedFunc
+
+                            let binding =
+                                { SynBindingRcd.Let with
+                                    Pattern = leftHandSide
+                                    Expr = SynExpr.CreateTyped(rightHandSide, returnInfo)
+                                    ReturnInfo = Some <| SynBindingReturnInfoRcd.Create returnInfo }
+
+                            SynModuleDecl.CreateLet [
+                                binding
+                            ]
+                    ]
+
+
+                let createStaticMethod (mi : MethodInfo) =
+
+                    let miParams = mi.GetParameters()
+
+                    let getPrivateFuncName name =
+                        $"p_%s{name}"
+                    let getCachedFuncName name =
+                        $"{getPrivateFuncName(name)}CachedFunc"
+                    let synModule =
+
+                        let cachedCall =
+                            let leftHandSide =
+                                let genericNames =
+                                    seq {
+                                        yield! miParams
+                                                |> Array.map(fun p -> p.ParameterType)
+                                                |> Array.map TypeHelpers.getFSTypeName
+                                        yield mi.ReturnType
+                                                |> TypeHelpers.getFSTypeName
+                                    }
+                                    |> Seq.collect(fun (_,gs) -> gs)
+                                    |> Seq.distinct
+                                    |> Seq.map(fun name -> SynTyparDecl.TyparDecl(SynAttributes.Empty, SynTypar.Typar(Ident.Create name, NoStaticReq, false)))
+                                    |> Seq.toList
+
+                                let functionGenerics = SynValTyparDecls.SynValTyparDecls(genericNames, false, [])
+                                SynPat.LongIdent(LongIdentWithDots.CreateString (getCachedFuncName mi.Name), None, Some functionGenerics, SynArgPats.Empty, Some SynAccess.Private, range0).ToRcd
+
+
+                            let returnInfo =
+                                let parameterSynTypesAndNamespaces =
+                                    seq {
+                                        if miParams.Length > 0 then
+                                            yield! miParams
+                                                    |> Array.map(fun p -> p.ParameterType)
+                                                    |> Array.map TypeHelpers.getFSTypeName
+                                        else
+                                            yield (SynType.CreateUnit, [])
+
+                                        yield
+                                            mi.ReturnType
+                                            |> TypeHelpers.getFSTypeName
+                                    } |> Seq.toList
+                                let parameters = parameterSynTypesAndNamespaces |> List.map (fun (ts,_)-> ts)
+                                let rec createReturnInfoType state list =
+                                    match state, list with
+                                    | None, head::shoulders::tail ->
+                                        let newState = SynType.CreateFun(head,shoulders)
+                                        createReturnInfoType (Some newState) tail
+                                    | Some(state), head::tail ->
+                                        let newState = SynType.CreateFun(state, head )
+                                        createReturnInfoType (Some newState) tail
+                                    | None, [f] -> f
+                                    | None, [] -> SynType.CreateUnit
+                                    | Some state, [] -> state
+
+                                (parameters |> createReturnInfoType None)
+
+                            let rightHandSide =
+                                let funcExpr  =
                                     let staticFunc arity =
                                         if mi.ReturnType = typeof<Void> then
                                             $"TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity%d{arity}ReturningUnit"
@@ -464,13 +574,13 @@ type TypeSafeInternalsGenerator() =
                                                     mi.ReturnType
                                                     |> TypeHelpers.getFSTypeName
                                         } |> Seq.toList
-                                    let synExpr =  SynExpr.CreateTypeApp (SynExpr.CreateLongIdent <| LongIdentWithDots.CreateString (staticFunc miParams.Length))  (generics |> List.map (fun (ts, _,_) -> ts))
-                                    synExpr, generics |> List.collect (fun (_,ns,_)-> ns)
+                                    let synExpr =  SynExpr.CreateTypeApp (SynExpr.CreateLongIdent <| LongIdentWithDots.CreateString (staticFunc miParams.Length))  (generics |> List.map (fun (ts,_) -> ts))
+                                    synExpr
                                 let argsExpr = SynExpr.CreateIdent <| Ident.Create "loadedModule"
                                 let argsExpr2 = SynExpr.CreateConst <| SynConst.CreateString mi.Name
 
                                 let curriedFunc = funcExpr <@> argsExpr <@> argsExpr2
-                                curriedFunc, namespaces
+                                curriedFunc
 
                             let binding =
                                 { SynBindingRcd.Let with
@@ -480,10 +590,10 @@ type TypeSafeInternalsGenerator() =
 
                             SynModuleDecl.CreateLet [
                                 binding
-                            ], rightHandNamespaces @ retInfoNamespaces
+                            ]
 
 
-                        let realCall, namespaces =
+                        let realCall =
                             let leftHandSide =
                                 let args =
                                     if miParams.Length = 0 then
@@ -494,21 +604,12 @@ type TypeSafeInternalsGenerator() =
                                         |> Array.toList
 
                                 SynPatRcd.CreateLongIdent(LongIdentWithDots.CreateString ($"{getPrivateFuncName(mi.Name)}"), args)
-                            let (rightHandSide, opens) =
-                                let (funcExpr , namespaces) =
+                            let rightHandSide =
+                                let funcExpr =
                                     let staticFunc = getCachedFuncName mi.Name
-                                    let generics =
-                                        seq {
-                                            yield! miParams
-                                                    |> Array.map(fun p -> p.ParameterType)
-                                                    |> Array.map TypeHelpers.getFSTypeName
-                                            if mi.ReturnType <> typeof<System.Void> then
-                                                yield
-                                                    mi.ReturnType
-                                                    |> TypeHelpers.getFSTypeName
-                                        } |> Seq.toList
+
                                     let synExpr =  SynExpr.CreateTypeApp (SynExpr.CreateLongIdent <| LongIdentWithDots.CreateString (staticFunc))  []
-                                    synExpr, generics |> List.collect (fun (_,ns,_)-> ns)
+                                    synExpr
 
                                 let curriedFunc = funcExpr
                                 let retFunc =
@@ -519,49 +620,69 @@ type TypeSafeInternalsGenerator() =
                                         ||> Array.fold(fun state p ->
                                             state <@> (SynExpr.CreateIdent <| Ident.Create p.Name)
                                         )
-                                retFunc, namespaces
+                                retFunc
                             let binding =
                                 { SynBindingRcd.Let with
                                     Pattern = leftHandSide
                                     Expr = rightHandSide }
                             SynModuleDecl.CreateLet [
                                 binding
-                            ], namespaces @ opens
+                            ]
 
 
 
-                        [cachedCall; realCall], namespaces
+                        [cachedCall; realCall]
 
 
 
-                    synModule, namespaces
+                    synModule
 
-                let createModule assemblyName (ProCompiledModuleName pcModuleName) (moduleName : ReflectedModuleName) methods =
-                    let decls = [
-                        yield ``open`` "System.Reflection"
+                let createModule assemblyName (ProCompiledModuleName pcModuleName) (moduleName : ReflectedModuleName) staticMethods visibleInternalRecords =
+                    let staticMethodDecls = [
                         yield ``let private loadedAssembly = Assembly.Load`` assemblyName
                         yield ``let private sqlmodule = loadedAssembly.GetTypes() |> Seq.find(fun t -> t.FullName =`` moduleName
-                        let ms = methods |> Seq.map createStaticMethod |> Seq.toList
-                        for ns in ms |> List.collect snd |> List.distinct do
-                            yield ``open`` ns
-                        for m in ms |> List.collect fst do
+                        let ms = staticMethods |> Seq.map createStaticMethod |> Seq.toList
+
+                        for m in ms |> List.collect id do
                             yield m
                     ]
 
-                    (Ident.CreateLong pcModuleName, decls)
+                    let visibleInternalRecordsDecls = [
+
+                        for (rcd : Type) in visibleInternalRecords do
+                            let moduleName = SynComponentInfoRcd.Create (Ident.CreateLong rcd.Name)
+                            let moduleBody = [
+                                createTypeOf rcd
+                                yield! createRecordGetters rcd
+                                // let typeName =
+                                //     match rcd |> TypeHelpers.getFSTypeName |> fst with
+                                //     | SynType.LongIdent li -> li
+                                //     | _ -> failwith "No"
+                                // let members = [
+                                //     // SynMemberDefn.CreateMember <| SynBindingRcd
+                                // ]
+                                // SynModuleDecl.CreateType (SynComponentInfoRcd.Create typeName.Lid , members)
+                            ]
+                            SynModuleDecl.CreateNestedModule(moduleName, moduleBody)
+
+
+
+
+                    ]
+
+                    (Ident.CreateLong pcModuleName, staticMethodDecls @ visibleInternalRecordsDecls)
 
                 let moduleTree  =
                     [
-                        for (assembly, types) in infos do
-                            for (``type``, methods) in types do
-                                if methods |> Seq.length > 0 then
-                                    if ``type``.FullName.EndsWith("Exception") |> not then
-                                        let reflectionName = ReflectedModuleName ``type``.FullName
-                                        let precompiledModuleNamed =
-                                            ProCompiledModuleName (TypeHelpers.replaceModuleFullName ``type``)
+                        for generateMe in infos do
+                            for moduleInfos in generateMe.ModuleInfos do
+                                if moduleInfos.StaticMethods |> Seq.length > 0 then
+                                    if moduleInfos.Type |> FSharpType.IsExceptionRepresentation |> not then // TODO: Filter out non-visible return types
+                                        let reflectionName = ReflectedModuleName moduleInfos.Type.FullName
+                                        let precompiledModuleNamed = ProCompiledModuleName (TypeHelpers.replaceModuleFullName moduleInfos.Type)
 
-                                        let assemblyName = assembly.FullName
-                                        yield createModule assemblyName precompiledModuleNamed reflectionName methods
+                                        let assemblyName = generateMe.Assembly.FullName
+                                        yield createModule assemblyName precompiledModuleNamed reflectionName moduleInfos.StaticMethods moduleInfos.VisibleInternalRecords
                     ]
                     |> ModuleTree.fromExtractRecords
                 let rec createModulesAndClasses (moduleTree) =

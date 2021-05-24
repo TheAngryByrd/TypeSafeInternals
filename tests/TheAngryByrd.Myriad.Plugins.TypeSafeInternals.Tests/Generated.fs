@@ -7,97 +7,184 @@ namespace TypeSafeInternals
 module Npgsql =
     module FSharp =
         module Sql =
-            open System.Reflection
             let private loadedAssembly =
-                Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
+                System.Reflection.Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
 
             let private loadedModule =
                 loadedAssembly.GetTypes()
                 |> Seq.find (fun (t: System.Type) -> t.FullName = "Npgsql.FSharp.SqlModule")
 
-            open Npgsql.FSharp
-            open Npgsql
-            open Microsoft.FSharp.Collections
-
-            let private p_defaultConStringCachedFunc : unit -> Sql.ConnectionStringBuilder =
-                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity0<Sql.ConnectionStringBuilder>
+            let private p_defaultConStringCachedFunc : unit -> Npgsql.FSharp.Sql.ConnectionStringBuilder =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity0<Npgsql.FSharp.Sql.ConnectionStringBuilder>
                     loadedModule
                     "defaultConString"
 
             let p_defaultConString () = p_defaultConStringCachedFunc ()
-            let private p_defaultPropsCachedFunc : unit -> Sql.SqlProps =
-                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity0<Sql.SqlProps> loadedModule "defaultProps"
+            let private p_defaultPropsCachedFunc : unit -> Npgsql.FSharp.Sql.SqlProps =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity0<Npgsql.FSharp.Sql.SqlProps>
+                    loadedModule
+                    "defaultProps"
 
             let p_defaultProps () = p_defaultPropsCachedFunc ()
-            let private p_newConnectionCachedFunc : Sql.SqlProps -> NpgsqlConnection =
-                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Sql.SqlProps, NpgsqlConnection>
+            let private p_newConnectionCachedFunc : Npgsql.FSharp.Sql.SqlProps -> Npgsql.NpgsqlConnection =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Npgsql.FSharp.Sql.SqlProps, Npgsql.NpgsqlConnection>
                     loadedModule
                     "newConnection"
 
             let p_newConnection props = p_newConnectionCachedFunc props
-            let private p_getConnectionCachedFunc : Sql.SqlProps -> NpgsqlConnection =
-                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Sql.SqlProps, NpgsqlConnection>
+            let private p_getConnectionCachedFunc : Npgsql.FSharp.Sql.SqlProps -> Npgsql.NpgsqlConnection =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Npgsql.FSharp.Sql.SqlProps, Npgsql.NpgsqlConnection>
                     loadedModule
                     "getConnection"
 
             let p_getConnection props = p_getConnectionCachedFunc props
-            let private p_populateRowCachedFunc : NpgsqlCommand -> list<string * SqlValue> -> unit =
-                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2ReturningUnit<NpgsqlCommand, list<string * SqlValue>>
+            let private p_populateRowCachedFunc : Npgsql.NpgsqlCommand -> list<string * Npgsql.FSharp.SqlValue> -> unit =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2ReturningUnit<Npgsql.NpgsqlCommand, list<string * Npgsql.FSharp.SqlValue>>
                     loadedModule
                     "populateRow"
 
             let p_populateRow cmd row = p_populateRowCachedFunc cmd row
-            let private p_populateCmdCachedFunc : NpgsqlCommand -> Sql.SqlProps -> unit =
-                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2ReturningUnit<NpgsqlCommand, Sql.SqlProps>
+            let private p_populateCmdCachedFunc : Npgsql.NpgsqlCommand -> Npgsql.FSharp.Sql.SqlProps -> unit =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2ReturningUnit<Npgsql.NpgsqlCommand, Npgsql.FSharp.Sql.SqlProps>
                     loadedModule
                     "populateCmd"
 
             let p_populateCmd cmd props = p_populateCmdCachedFunc cmd props
+            module ConnectionStringBuilder =
+                let private loadedType =
+                    typeof<Npgsql.FSharp.Sql.ConnectionStringBuilder>
+
+                let get_Host : Npgsql.FSharp.Sql.ConnectionStringBuilder -> string =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.ConnectionStringBuilder, string>
+                        loadedType
+                        "Host"
+
+                let get_Database : Npgsql.FSharp.Sql.ConnectionStringBuilder -> string =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.ConnectionStringBuilder, string>
+                        loadedType
+                        "Database"
+
+                let get_Username : Npgsql.FSharp.Sql.ConnectionStringBuilder -> option<string> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.ConnectionStringBuilder, option<string>>
+                        loadedType
+                        "Username"
+
+                let get_Password : Npgsql.FSharp.Sql.ConnectionStringBuilder -> option<string> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.ConnectionStringBuilder, option<string>>
+                        loadedType
+                        "Password"
+
+                let get_Port : Npgsql.FSharp.Sql.ConnectionStringBuilder -> option<int32> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.ConnectionStringBuilder, option<int32>>
+                        loadedType
+                        "Port"
+
+                let get_Config : Npgsql.FSharp.Sql.ConnectionStringBuilder -> option<string> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.ConnectionStringBuilder, option<string>>
+                        loadedType
+                        "Config"
+
+                let get_SslMode : Npgsql.FSharp.Sql.ConnectionStringBuilder -> option<Npgsql.FSharp.SslMode> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.ConnectionStringBuilder, option<Npgsql.FSharp.SslMode>>
+                        loadedType
+                        "SslMode"
+
+                let get_TrustServerCertificate : Npgsql.FSharp.Sql.ConnectionStringBuilder -> option<System.Boolean> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.ConnectionStringBuilder, option<System.Boolean>>
+                        loadedType
+                        "TrustServerCertificate"
+
+                let get_ConvertInfinityDateTime : Npgsql.FSharp.Sql.ConnectionStringBuilder -> option<System.Boolean> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.ConnectionStringBuilder, option<System.Boolean>>
+                        loadedType
+                        "ConvertInfinityDateTime"
+
+            module SqlProps =
+                let private loadedType = typeof<Npgsql.FSharp.Sql.SqlProps>
+                let get_ConnectionString : Npgsql.FSharp.Sql.SqlProps -> string =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.SqlProps, string>
+                        loadedType
+                        "ConnectionString"
+
+                let get_SqlQuery : Npgsql.FSharp.Sql.SqlProps -> list<string> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.SqlProps, list<string>>
+                        loadedType
+                        "SqlQuery"
+
+                let get_Parameters : Npgsql.FSharp.Sql.SqlProps -> list<string * Npgsql.FSharp.SqlValue> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.SqlProps, list<string * Npgsql.FSharp.SqlValue>>
+                        loadedType
+                        "Parameters"
+
+                let get_IsFunction : Npgsql.FSharp.Sql.SqlProps -> System.Boolean =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.SqlProps, System.Boolean>
+                        loadedType
+                        "IsFunction"
+
+                let get_NeedPrepare : Npgsql.FSharp.Sql.SqlProps -> System.Boolean =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.SqlProps, System.Boolean>
+                        loadedType
+                        "NeedPrepare"
+
+                let get_CancellationToken : Npgsql.FSharp.Sql.SqlProps -> System.Threading.CancellationToken =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.SqlProps, System.Threading.CancellationToken>
+                        loadedType
+                        "CancellationToken"
+
+                let get_ClientCertificate : Npgsql.FSharp.Sql.SqlProps -> option<System.Security.Cryptography.X509Certificates.X509Certificate> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.SqlProps, option<System.Security.Cryptography.X509Certificates.X509Certificate>>
+                        loadedType
+                        "ClientCertificate"
+
+                let get_ExistingConnection : Npgsql.FSharp.Sql.SqlProps -> option<Npgsql.NpgsqlConnection> =
+                    TheAngryByrd.TypeSafeInternals.Delegate.createGetter<Npgsql.FSharp.Sql.SqlProps, option<Npgsql.NpgsqlConnection>>
+                        loadedType
+                        "ExistingConnection"
 
         module Utils =
-            open System.Reflection
             let private loadedAssembly =
-                Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
+                System.Reflection.Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
 
             let private loadedModule =
                 loadedAssembly.GetTypes()
                 |> Seq.find (fun (t: System.Type) -> t.FullName = "Npgsql.FSharp.Utils")
 
-            open Microsoft.FSharp.Core
-            open Npgsql.FSharp
-
-            let private p_sqlMapCachedFunc<'a> : option<'a> -> ('a -> SqlValue) -> SqlValue =
-                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2<option<'a>, ('a -> SqlValue), SqlValue>
+            let private p_sqlMapCachedFunc<'a> : option<'a> -> ('a -> Npgsql.FSharp.SqlValue) -> Npgsql.FSharp.SqlValue =
+                TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity2<option<'a>, ('a -> Npgsql.FSharp.SqlValue), Npgsql.FSharp.SqlValue>
                     loadedModule
                     "sqlMap"
 
             let p_sqlMap option f = p_sqlMapCachedFunc option f
 
 module PostgresUri =
-    open System.Reflection
     let private loadedAssembly =
-        Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
+        System.Reflection.Assembly.Load("Npgsql.FSharp, Version=3.10.0.0, Culture=neutral, PublicKeyToken=null")
 
     let private loadedModule =
         loadedAssembly.GetTypes()
         |> Seq.find (fun (t: System.Type) -> t.FullName = "PostgresUri")
 
-    open System
-    open Microsoft.FSharp.Core
-
-    let private p_extractHostCachedFunc : Uri -> option<string> =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Uri, option<string>> loadedModule "extractHost"
+    let private p_extractHostCachedFunc : System.Uri -> option<string> =
+        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<System.Uri, option<string>>
+            loadedModule
+            "extractHost"
 
     let p_extractHost uri = p_extractHostCachedFunc uri
-    let private p_extractUserCachedFunc : Uri -> option<string> =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Uri, option<string>> loadedModule "extractUser"
+    let private p_extractUserCachedFunc : System.Uri -> option<string> =
+        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<System.Uri, option<string>>
+            loadedModule
+            "extractUser"
 
     let p_extractUser uri = p_extractUserCachedFunc uri
-    let private p_extractDatabaseCachedFunc : Uri -> option<string> =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Uri, option<string>> loadedModule "extractDatabase"
+    let private p_extractDatabaseCachedFunc : System.Uri -> option<string> =
+        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<System.Uri, option<string>>
+            loadedModule
+            "extractDatabase"
 
     let p_extractDatabase uri = p_extractDatabaseCachedFunc uri
-    let private p_extractPortCachedFunc : Uri -> option<string> =
-        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<Uri, option<string>> loadedModule "extractPort"
+    let private p_extractPortCachedFunc : System.Uri -> option<string> =
+        TheAngryByrd.TypeSafeInternals.Delegate.createStaticArity1<System.Uri, option<string>>
+            loadedModule
+            "extractPort"
 
     let p_extractPort uri = p_extractPortCachedFunc uri
