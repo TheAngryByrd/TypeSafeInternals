@@ -1,6 +1,40 @@
-# TypeSafeInternals
+# TheAngryByrd.TypeSafeInternals
 
-[Enter useful description for TypeSafeInternals]
+## What
+
+This uses [Myriad](https://github.com/MoiraeSoftware/myriad) to generate type safe reflection calls to internal functions/properties/methods.
+
+## Why
+
+Sometimes you have to use reflection and there's no simple way around it. When creating reflection calls to internal/private functions/properties/methods, the underlying function may change when you go to upgrade the dependency. With `TypeSafeInternals`, it will re-generate the code for the calls so you would get a compile error if the API has drifted.
+
+See also:
+
+* [Microsoft Reflection Documentation](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection)
+* [Making Reflection Fly and Exploring Delegates](https://codeblog.jonskeet.uk/2008/08/09/making-reflection-fly-and-exploring-delegates/)
+* [What is reflection and why is it useful?](https://stackoverflow.com/questions/37628/what-is-reflection-and-why-is-it-useful)
+
+## How
+
+1. Install `TheAngryByrd.Myriad.Plugins.TypeSafeInternals` via [Nuget](https://www.nuget.org/packages/TheAngryByrd.Myriad.Plugins.TypeSafeInternals/#dotnet-cli) or [Paket](https://www.nuget.org/packages/TheAngryByrd.Myriad.Plugins.TypeSafeInternals/#paket-cli).
+2. Create an empty `myriad.toml` file next to your `fsproj` file.
+3. Add this xml snippet to your `fsproj` file.
+
+    ```xml
+    <Compile Include="Generated.fs">
+        <MyriadFile>TypeSafeInternals.txt</MyriadFile>
+    </Compile>
+    ```
+
+4. Create `TypeSafeInternals.txt` next to you `fsproj` file.
+5. Add the name of the Nuget package (such as `Npgsql.FSharp`) to `TypeSafeInternals.txt`.
+6. run `dotnet build`
+
+---
+
+## Maintainers
+
+* [TheAngryByrd](https://github.com/TheAngryByrd)
 
 ---
 
@@ -11,11 +45,14 @@ GitHub Actions |
 [![GitHub Actions](https://github.com/TheAngryByrd/TypeSafeInternals/workflows/Build%20master/badge.svg)](https://github.com/TheAngryByrd/TypeSafeInternals/actions?query=branch%3Amaster) |
 [![Build History](https://buildstats.info/github/chart/TheAngryByrd/TypeSafeInternals)](https://github.com/TheAngryByrd/TypeSafeInternals/actions?query=branch%3Amaster) |
 
-## NuGet 
+---
+
+## NuGet
 
 Package | Stable | Prerelease
 --- | --- | ---
-TypeSafeInternals | [![NuGet Badge](https://buildstats.info/nuget/TypeSafeInternals)](https://www.nuget.org/packages/TypeSafeInternals/) | [![NuGet Badge](https://buildstats.info/nuget/TypeSafeInternals?includePreReleases=true)](https://www.nuget.org/packages/TypeSafeInternals/)
+TheAngryByrd.TypeSafeInternals | [![NuGet Badge](https://buildstats.info/nuget/TheAngryByrd.TypeSafeInternals)](https://www.nuget.org/packages/TheAngryByrd.TypeSafeInternals/) | [![NuGet Badge](https://buildstats.info/nuget/TheAngryByrd.TypeSafeInternals?includePreReleases=true)](https://www.nuget.org/packages/TheAngryByrd.TypeSafeInternals/)
+TheAngryByrd.Myriad.Plugins.TypeSafeInternals | [![NuGet Badge](https://buildstats.info/nuget/TheAngryByrd.Myriad.Plugins.TypeSafeInternals)](https://www.nuget.org/packages/TheAngryByrd.Myriad.Plugins.TypeSafeInternals/) | [![NuGet Badge](https://buildstats.info/nuget/TheAngryByrd.Myriad.Plugins.TypeSafeInternals?includePreReleases=true)](https://www.nuget.org/packages/TheAngryByrd.Myriad.Plugins.TypeSafeInternals/)
 
 ---
 
@@ -23,13 +60,11 @@ TypeSafeInternals | [![NuGet Badge](https://buildstats.info/nuget/TypeSafeIntern
 
 Make sure the following **requirements** are installed on your system:
 
-- [dotnet SDK](https://www.microsoft.com/net/download/core) 3.0 or higher
-- [Mono](http://www.mono-project.com/) if you're on Linux or macOS.
+- [dotnet SDK](https://www.microsoft.com/net/download/core) 5.0 or higher
 
 or
 
 - [VSCode Dev Container](https://code.visualstudio.com/docs/remote/containers)
-
 
 ---
 
