@@ -30,6 +30,15 @@ See also:
 5. Add the name of the Nuget package (such as `Npgsql.FSharp`) to `TypeSafeInternals.txt`.
 6. run `dotnet build`
 
+## Features
+
+- [x] F# [module level NonPublic functions](https://stackoverflow.com/a/7379327)
+- [x] Getters for [visible](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.typeinfo.isvisible?view=netstandard-1.6) [record with NonPublic members](https://stackoverflow.com/a/12389894)
+- [ ] Copy-and-Update for visible records with NonPublic members
+- [ ] NonPublic Static Methods
+- [ ] NonPublic instance methods
+- [ ] Shims for NonPublic types
+
 ---
 
 ## Maintainers
