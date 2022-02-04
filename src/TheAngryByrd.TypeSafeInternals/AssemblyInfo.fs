@@ -4,20 +4,20 @@ open System.Reflection
 
 [<assembly: AssemblyTitleAttribute("TheAngryByrd.TypeSafeInternals")>]
 [<assembly: AssemblyProductAttribute("TheAngryByrd.TypeSafeInternals")>]
-[<assembly: AssemblyVersionAttribute("0.1.0")>]
-[<assembly: AssemblyMetadataAttribute("ReleaseDate","2021-05-24T00:00:00.0000000-04:00")>]
-[<assembly: AssemblyFileVersionAttribute("0.1.0")>]
-[<assembly: AssemblyInformationalVersionAttribute("0.1.0")>]
-[<assembly: AssemblyMetadataAttribute("ReleaseChannel","release")>]
-[<assembly: AssemblyMetadataAttribute("GitHash","b60a838c25b86d83ca8a536f02f5e33d2125efe7")>]
+[<assembly: AssemblyVersionAttribute("0.1.1")>]
+[<assembly: AssemblyMetadataAttribute("ReleaseDate","2022-02-04T00:00:00.0000000-05:00")>]
+[<assembly: AssemblyFileVersionAttribute("0.1.1")>]
+[<assembly: AssemblyInformationalVersionAttribute("0.1.1")>]
+[<assembly: AssemblyMetadataAttribute("ReleaseChannel","beta")>]
+[<assembly: AssemblyMetadataAttribute("GitHash","e3d66c38b8a1da3d6bbc42a4a8db85a774a4fb4e")>]
 do ()
 
 module internal AssemblyVersionInformation =
     let [<Literal>] AssemblyTitle = "TheAngryByrd.TypeSafeInternals"
     let [<Literal>] AssemblyProduct = "TheAngryByrd.TypeSafeInternals"
-    let [<Literal>] AssemblyVersion = "0.1.0"
-    let [<Literal>] AssemblyMetadata_ReleaseDate = "2021-05-24T00:00:00.0000000-04:00"
-    let [<Literal>] AssemblyFileVersion = "0.1.0"
-    let [<Literal>] AssemblyInformationalVersion = "0.1.0"
-    let [<Literal>] AssemblyMetadata_ReleaseChannel = "release"
-    let [<Literal>] AssemblyMetadata_GitHash = "b60a838c25b86d83ca8a536f02f5e33d2125efe7"
+    let [<Literal>] AssemblyVersion = "0.1.1"
+    let [<Literal>] AssemblyMetadata_ReleaseDate = "2022-02-04T00:00:00.0000000-05:00"
+    let [<Literal>] AssemblyFileVersion = "0.1.1"
+    let [<Literal>] AssemblyInformationalVersion = "0.1.1"
+    let [<Literal>] AssemblyMetadata_ReleaseChannel = "beta"
+    let [<Literal>] AssemblyMetadata_GitHash = "e3d66c38b8a1da3d6bbc42a4a8db85a774a4fb4e"
