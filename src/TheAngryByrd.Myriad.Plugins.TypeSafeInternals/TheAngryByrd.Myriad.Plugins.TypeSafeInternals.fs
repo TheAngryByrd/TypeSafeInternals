@@ -2,10 +2,9 @@
 
 open Myriad.Core
 open System.Reflection
-
-open FSharp.Compiler
 open FSharp.Compiler.SyntaxTree
 open FsAst
+open Myriad.Core.Ast
 open FSharp.Compiler.Range
 open System
 open FSharp.Compiler.XmlDoc
@@ -287,9 +286,7 @@ type TypeSafeInternalsGenerator() =
                 ".txt"
             }
 
-        member x.Generate(ctx : GeneratorContext) : FsAst.AstRcd.SynModuleOrNamespaceRcd list =
-            try
-
+        member x.Generate(ctx : GeneratorContext) =
                 let outputDir = System.Environment.CurrentDirectory
                 let projectAssetsJsonFileInfo = IO.FileInfo <| IO.Path.Combine(outputDir, "obj", "project.assets.json")
 
@@ -701,14 +698,9 @@ type TypeSafeInternalsGenerator() =
                     )
 
 
-
                 let ``namespace`` = "TypeSafeInternals"
                 [
-                    { SynModuleOrNamespaceRcd.CreateNamespace(Ident.CreateLong ``namespace``)
-                        with
-                            Declarations = createModulesAndClasses moduleTree
-                    }
+                    SynModuleOrNamespace.CreateNamespace (Ident.CreateLong ``namespace``, decls= createModulesAndClasses moduleTree)
                 ]
-            with e ->
-                printfn "%A" e
-                []
+                |> Output.Ast
+
