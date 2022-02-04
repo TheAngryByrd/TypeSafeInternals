@@ -28,6 +28,7 @@ group Build
     nuget Fake.DotNet.Paket 5.20.4-alpha.1642
     nuget Fake.Api.GitHub 5.20.4-alpha.1642
     nuget Fake.BuildServer.GitHubActions 5.20.4-alpha.1642
+    nuget MSBuild.StructuredLogger 2.1.630
     nuget Fantomas
     nuget Argu
 
