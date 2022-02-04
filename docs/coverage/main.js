@@ -224,14 +224,14 @@ var assemblies = [
   {
     "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals",
     "classes": [
-      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.Debugging", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_Debugging.htm", "cl": 0, "ucl": 7, "cal": 7, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 6, "lch": [], "bch": [], "hc": [] },
-      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.DSL", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_DSL.htm", "cl": 0, "ucl": 11, "cal": 11, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.Debugging", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_Debugging.htm", "cl": 0, "ucl": 1, "cal": 1, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.DSL", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_DSL.htm", "cl": 0, "ucl": 10, "cal": 10, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.DSLOperators", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_DSLOperators.htm", "cl": 0, "ucl": 1, "cal": 1, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.Extensions", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_Extensions.htm", "cl": 0, "ucl": 20, "cal": 20, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTreeModule", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_ModuleTreeModule.htm", "cl": 0, "ucl": 16, "cal": 16, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 12, "lch": [], "bch": [], "hc": [] },
+      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTreeModule", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_ModuleTreeModule.htm", "cl": 0, "ucl": 12, "cal": 12, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 4, "lch": [], "bch": [], "hc": [] },
       { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.String", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_String.htm", "cl": 0, "ucl": 3, "cal": 3, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
-      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm", "cl": 0, "ucl": 82, "cal": 82, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 86, "lch": [], "bch": [], "hc": [] },
-      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "cl": 0, "ucl": 349, "cal": 349, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 86, "lch": [], "bch": [], "hc": [] },
+      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm", "cl": 0, "ucl": 73, "cal": 73, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 90, "lch": [], "bch": [], "hc": [] },
+      { "name": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "rp": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "cl": 0, "ucl": 220, "cal": 220, "tl": 714, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 64, "lch": [], "bch": [], "hc": [] },
     ]},
   {
     "name": "TheAngryByrd.TypeSafeInternals",
@@ -258,119 +258,126 @@ var riskHotspots = [
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm", "methodName": "System.Tuple`2<FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1<System.String>> TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers::getFSTypeName(System.Type)", "methodShortName": "getFSTypeName(...)", "fileIndex": 0, "line": 98,
     "metrics": [
       { "value": 26, "exceeded": false },
-      { "value": 16777216, "exceeded": true },
+      { "value": 33554432, "exceeded": true },
       { "value": 702, "exceeded": true },
+    ]},
+  {
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm", "methodName": "System.String TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers::toFSReservatedWord$cont@162(System.Boolean,System.Type,Microsoft.FSharp.Core.Unit)", "methodShortName": "toFSReservatedWord$cont@162(...)", "fileIndex": 0, "line": 162,
+    "metrics": [
+      { "value": 11, "exceeded": false },
+      { "value": 1024, "exceeded": true },
+      { "value": 132, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm", "methodName": "System.String TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers::toFSReservatedWord(System.Boolean,System.Type)", "methodShortName": "toFSReservatedWord(...)", "fileIndex": 0, "line": 153,
     "metrics": [
-      { "value": 20, "exceeded": false },
-      { "value": 262144, "exceeded": true },
-      { "value": 420, "exceeded": true },
+      { "value": 10, "exceeded": false },
+      { "value": 512, "exceeded": true },
+      { "value": 110, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/parameterSynTypesAndNamespaces@533::GenerateNext(System.Collections.Generic.IEnumerable`1<System.Tuple`2<FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1<System.String>>>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 533,
-    "metrics": [
-      { "value": 13, "exceeded": false },
-      { "value": 64, "exceeded": false },
-      { "value": 182, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/generics@569-2::GenerateNext(System.Collections.Generic.IEnumerable`1<System.Tuple`2<FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1<System.String>>>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 569,
     "metrics": [
       { "value": 12, "exceeded": false },
       { "value": 64, "exceeded": false },
       { "value": 156, "exceeded": true },
     ]},
   {
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/generics@569-2::GenerateNext(System.Collections.Generic.IEnumerable`1<System.Tuple`2<FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1<System.String>>>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 569,
+    "metrics": [
+      { "value": 11, "exceeded": false },
+      { "value": 64, "exceeded": false },
+      { "value": 132, "exceeded": true },
+    ]},
+  {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/genericNames@515-5::GenerateNext(System.Collections.Generic.IEnumerable`1<System.Tuple`2<FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1<System.String>>>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 515,
     "metrics": [
-      { "value": 11, "exceeded": false },
+      { "value": 10, "exceeded": false },
       { "value": 32, "exceeded": false },
-      { "value": 132, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/parameterSynTypesAndNamespaces@533::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 533,
-    "metrics": [
-      { "value": 11, "exceeded": false },
-      { "value": 0, "exceeded": false },
-      { "value": 132, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/staticMethodDecls@642::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 642,
-    "metrics": [
-      { "value": 11, "exceeded": false },
-      { "value": 0, "exceeded": false },
-      { "value": 132, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/genericNames@515-5::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 515,
-    "metrics": [
-      { "value": 10, "exceeded": false },
-      { "value": 0, "exceeded": false },
-      { "value": 110, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/generics@569-2::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 569,
-    "metrics": [
-      { "value": 10, "exceeded": false },
-      { "value": 0, "exceeded": false },
       { "value": 110, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleTree@677::GenerateNext(System.Collections.Generic.IEnumerable`1<System.Tuple`2<Microsoft.FSharp.Collections.FSharpList`1<FSharp.Compiler.SyntaxTree/Ident>,Microsoft.FSharp.Collections.FSharpList`1<FSharp.Compiler.SyntaxTree/SynModuleDecl>>>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 677,
     "metrics": [
-      { "value": 10, "exceeded": false },
+      { "value": 9, "exceeded": false },
       { "value": 16, "exceeded": false },
-      { "value": 110, "exceeded": true },
+      { "value": 90, "exceeded": true },
+    ]},
+  {
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/parameterSynTypesAndNamespaces@533::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 533,
+    "metrics": [
+      { "value": 9, "exceeded": false },
+      { "value": 0, "exceeded": false },
+      { "value": 90, "exceeded": true },
+    ]},
+  {
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/staticMethodDecls@642::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 642,
+    "metrics": [
+      { "value": 9, "exceeded": false },
+      { "value": 0, "exceeded": false },
+      { "value": 90, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleTree@677::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 677,
     "metrics": [
-      { "value": 10, "exceeded": false },
+      { "value": 8, "exceeded": false },
       { "value": 0, "exceeded": false },
-      { "value": 110, "exceeded": true },
+      { "value": 72, "exceeded": true },
+    ]},
+  {
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/genericNames@515-5::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 515,
+    "metrics": [
+      { "value": 8, "exceeded": false },
+      { "value": 0, "exceeded": false },
+      { "value": 72, "exceeded": true },
+    ]},
+  {
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/generics@569-2::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 569,
+    "metrics": [
+      { "value": 8, "exceeded": false },
+      { "value": 0, "exceeded": false },
+      { "value": 72, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleInfos@353::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 353,
     "metrics": [
-      { "value": 9, "exceeded": false },
+      { "value": 7, "exceeded": false },
       { "value": 0, "exceeded": false },
-      { "value": 90, "exceeded": true },
+      { "value": 56, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/infos@348::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 348,
     "metrics": [
-      { "value": 9, "exceeded": false },
+      { "value": 7, "exceeded": false },
       { "value": 0, "exceeded": false },
-      { "value": 90, "exceeded": true },
+      { "value": 56, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/createRecordGetters@431-1::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 431,
     "metrics": [
-      { "value": 9, "exceeded": false },
+      { "value": 7, "exceeded": false },
       { "value": 0, "exceeded": false },
-      { "value": 90, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/visibleInternalRecordsDecls@652::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 652,
-    "metrics": [
-      { "value": 9, "exceeded": false },
-      { "value": 0, "exceeded": false },
-      { "value": 90, "exceeded": true },
+      { "value": 56, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/staticMethodDecls@642::GenerateNext(System.Collections.Generic.IEnumerable`1<FSharp.Compiler.SyntaxTree/SynModuleDecl>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 642,
     "metrics": [
-      { "value": 8, "exceeded": false },
+      { "value": 7, "exceeded": false },
       { "value": 2, "exceeded": false },
-      { "value": 72, "exceeded": true },
+      { "value": 56, "exceeded": true },
     ]},
   {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTreeModule", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_ModuleTreeModule.htm", "methodName": "Microsoft.FSharp.Collections.FSharpList`1<TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTree> TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTreeModule/addHeadPath@243T::Invoke(System.Tuple`2<a,Microsoft.FSharp.Collections.FSharpList`1<Microsoft.FSharp.Collections.FSharpList`1<FSharp.Compiler.SyntaxTree/SynModuleDecl>>>,System.String,Microsoft.FSharp.Collections.FSharpList`1<System.String>,Microsoft.FSharp.Collections.FSharpList`1<TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTree>)", "methodShortName": "Invoke(...)", "fileIndex": 0, "line": 244,
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Void <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/visibleInternalRecordsDecls@652::Close()", "methodShortName": "Close()", "fileIndex": 0, "line": 652,
+    "metrics": [
+      { "value": 7, "exceeded": false },
+      { "value": 0, "exceeded": false },
+      { "value": 56, "exceeded": true },
+    ]},
+  {
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTreeModule", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_ModuleTreeModule.htm", "methodName": "Microsoft.FSharp.Collections.FSharpList`1<TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTree> TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTreeModule::addHeadPath@243(System.Tuple`2<a,Microsoft.FSharp.Collections.FSharpList`1<Microsoft.FSharp.Collections.FSharpList`1<FSharp.Compiler.SyntaxTree/SynModuleDecl>>>,System.String,Microsoft.FSharp.Collections.FSharpList`1<System.String>,Microsoft.FSharp.Collections.FSharpList`1<TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleTree>)", "methodShortName": "addHeadPath@243(...)", "fileIndex": 0, "line": 253,
     "metrics": [
       { "value": 6, "exceeded": false },
-      { "value": 24, "exceeded": false },
+      { "value": 4, "exceeded": false },
       { "value": 42, "exceeded": true },
     ]},
   {
@@ -383,72 +390,30 @@ var riskHotspots = [
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleInfos@353::GenerateNext(System.Collections.Generic.IEnumerable`1<TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ModuleInfos>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 353,
     "metrics": [
-      { "value": 6, "exceeded": false },
+      { "value": 5, "exceeded": false },
       { "value": 2, "exceeded": false },
-      { "value": 42, "exceeded": true },
+      { "value": 30, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/infos@348::GenerateNext(System.Collections.Generic.IEnumerable`1<TheAngryByrd.Myriad.Plugins.TypeSafeInternals.ToGenerate>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 348,
     "metrics": [
-      { "value": 6, "exceeded": false },
+      { "value": 5, "exceeded": false },
       { "value": 2, "exceeded": false },
-      { "value": 42, "exceeded": true },
+      { "value": 30, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/createRecordGetters@431-1::GenerateNext(System.Collections.Generic.IEnumerable`1<FSharp.Compiler.SyntaxTree/SynModuleDecl>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 431,
     "metrics": [
-      { "value": 6, "exceeded": false },
+      { "value": 5, "exceeded": false },
       { "value": 2, "exceeded": false },
-      { "value": 42, "exceeded": true },
+      { "value": 30, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/visibleInternalRecordsDecls@652::GenerateNext(System.Collections.Generic.IEnumerable`1<FSharp.Compiler.SyntaxTree/SynModuleDecl>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 652,
     "metrics": [
-      { "value": 6, "exceeded": false },
+      { "value": 5, "exceeded": false },
       { "value": 2, "exceeded": false },
-      { "value": 42, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "FSharp.Compiler.SyntaxTree/SynType <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/createReturnInfoType@458::Invoke(Microsoft.FSharp.Core.FSharpOption`1<FSharp.Compiler.SyntaxTree/SynType>,Microsoft.FSharp.Collections.FSharpList`1<FSharp.Compiler.SyntaxTree/SynType>)", "methodShortName": "Invoke(...)", "fileIndex": 0, "line": 458,
-    "metrics": [
-      { "value": 5, "exceeded": false },
-      { "value": 6, "exceeded": false },
       { "value": 30, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/generics@478-1::GenerateNext(System.Collections.Generic.IEnumerable`1<System.Tuple`2<FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1<System.String>>>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 477,
-    "metrics": [
-      { "value": 5, "exceeded": false },
-      { "value": 0, "exceeded": false },
-      { "value": 30, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "FSharp.Compiler.SyntaxTree/SynType <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/createReturnInfoType@546-1::Invoke(Microsoft.FSharp.Core.FSharpOption`1<FSharp.Compiler.SyntaxTree/SynType>,Microsoft.FSharp.Collections.FSharpList`1<FSharp.Compiler.SyntaxTree/SynType>)", "methodShortName": "Invoke(...)", "fileIndex": 0, "line": 546,
-    "metrics": [
-      { "value": 5, "exceeded": false },
-      { "value": 6, "exceeded": false },
-      { "value": 30, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "Microsoft.FSharp.Collections.FSharpList`1<FSharp.Compiler.SyntaxTree/SynModuleDecl> <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/createStaticMethod@503::Invoke(System.Reflection.MethodInfo)", "methodShortName": "Invoke(...)", "fileIndex": 0, "line": 503,
-    "metrics": [
-      { "value": 5, "exceeded": false },
-      { "value": 16, "exceeded": false },
-      { "value": 30, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleBody@655::GenerateNext(System.Collections.Generic.IEnumerable`1<FSharp.Compiler.SyntaxTree/SynModuleDecl>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 655,
-    "metrics": [
-      { "value": 5, "exceeded": false },
-      { "value": 0, "exceeded": false },
-      { "value": 30, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.Debugging", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_Debugging.htm", "methodName": "System.Void TheAngryByrd.Myriad.Plugins.TypeSafeInternals.Debugging::waitForDebuggerAttached(System.String)", "methodShortName": "waitForDebuggerAttached(...)", "fileIndex": 0, "line": 19,
-    "metrics": [
-      { "value": 4, "exceeded": false },
-      { "value": 8, "exceeded": false },
-      { "value": 20, "exceeded": true },
     ]},
   {
     "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeHelpers.htm", "methodName": "System.Boolean TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeHelpers::equivHeadTypes(System.Type,System.Type)", "methodShortName": "equivHeadTypes(...)", "fileIndex": 0, "line": 89,
@@ -458,21 +423,14 @@ var riskHotspots = [
       { "value": 20, "exceeded": true },
     ]},
   {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/Myriad-Core-IMyriadGenerator-get_ValidInputExtensions@286::GenerateNext(System.Collections.Generic.IEnumerable`1<System.String>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 286,
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/generics@478-1::GenerateNext(System.Collections.Generic.IEnumerable`1<System.Tuple`2<FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1<System.String>>>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 477,
     "metrics": [
       { "value": 4, "exceeded": false },
       { "value": 0, "exceeded": false },
       { "value": 20, "exceeded": true },
     ]},
   {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/genericNames@438-2::GenerateNext(System.Collections.Generic.IEnumerable`1<System.Tuple`2<FSharp.Compiler.SyntaxTree/SynType,Microsoft.FSharp.Collections.FSharpList`1<System.String>>>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 438,
-    "metrics": [
-      { "value": 4, "exceeded": false },
-      { "value": 0, "exceeded": false },
-      { "value": 20, "exceeded": true },
-    ]},
-  {
-    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/createModulesAndClasses@695-2::GenerateNext(System.Collections.Generic.IEnumerable`1<FSharp.Compiler.SyntaxTree/SynModuleDecl>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 695,
+    "assembly": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals", "class": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals.TypeSafeInternalsGenerator", "reportPath": "TheAngryByrd.Myriad.Plugins.TypeSafeInternals_TypeSafeInternalsGenerator.htm", "methodName": "System.Int32 <StartupCode$TheAngryByrd-Myriad-Plugins-TypeSafeInternals>.$TheAngryByrd.Myriad.Plugins.TypeSafeInternals/moduleBody@655::GenerateNext(System.Collections.Generic.IEnumerable`1<FSharp.Compiler.SyntaxTree/SynModuleDecl>&)", "methodShortName": "GenerateNext(...)", "fileIndex": 0, "line": 655,
     "metrics": [
       { "value": 4, "exceeded": false },
       { "value": 0, "exceeded": false },
