@@ -666,6 +666,18 @@ let githubRelease _ =
     |> GitHub.publishDraft
     |> Async.RunSynchronously
 
+let ignoredFilePredicates = [
+    fun (f : string) -> f.EndsWith("AssemblyInfo.fs")
+    fun (f : string) -> f.EndsWith("Generated.fs")
+]
+
+module Seq =
+    let filterOut predicate xs =
+        xs |> Seq.filter(predicate >> not)
+
+let withoutIgnoredFiles =
+    Seq.filterOut(fun f -> ignoredFilePredicates |> Seq.exists (fun p -> p f))
+
 let formatCode _ =
     let result =
         [
@@ -673,8 +685,7 @@ let formatCode _ =
             testsCodeGlob
         ]
         |> Seq.collect id
-        // Ignore AssemblyInfo
-        |> Seq.filter(fun f -> f.EndsWith("AssemblyInfo.fs") |> not)
+        |> withoutIgnoredFiles
         |> String.concat " "
         |> dotnet.fantomas
 
@@ -689,8 +700,7 @@ let checkFormatCode _ =
             testsCodeGlob
         ]
         |> Seq.collect id
-        // Ignore AssemblyInfo
-        |> Seq.filter(fun f -> f.EndsWith("AssemblyInfo.fs") |> not)
+        |> withoutIgnoredFiles
         |> String.concat " "
         |> sprintf "%s --check"
         |> dotnet.fantomas
