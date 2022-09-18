@@ -12,7 +12,11 @@ open Fake.Core.TargetOperators
 open Fake.Api
 open Fake.BuildServer
 
-Environment.GetCommandLineArgs()
+let getCLIArgs () =
+    System.Environment.GetCommandLineArgs()
+    |> Array.skip 1 // The first element in the array contains the file name of the executing program
+
+getCLIArgs ()
 |> Array.toList
 |> Context.FakeExecutionContext.Create false "build.fsx"
 |> Context.RuntimeContext.Fake
@@ -43,31 +47,33 @@ let environVarAsBoolOrDefault varName defaultValue =
 let productName = "TheAngryByrd.TypeSafeInternals"
 let sln = "TheAngryByrd.TypeSafeInternals.sln"
 
+let rootDir = __SOURCE_DIRECTORY__ </> ".."
+
 
 let srcCodeGlob =
-    !! (__SOURCE_DIRECTORY__  @@ "src/**/*.fs")
-    ++ (__SOURCE_DIRECTORY__  @@ "src/**/*.fsx")
+    !! (rootDir </> "src/**/*.fs")
+    ++ (rootDir </> "src/**/*.fsx")
 
 let testsCodeGlob =
-    !! (__SOURCE_DIRECTORY__  @@ "tests/**/*.fs")
-    ++ (__SOURCE_DIRECTORY__  @@ "tests/**/*.fsx")
+    !! (rootDir </> "tests/**/*.fs")
+    ++ (rootDir </> "tests/**/*.fsx")
 
-let srcGlob =__SOURCE_DIRECTORY__  @@ "src/**/*.??proj"
-let testsGlob = __SOURCE_DIRECTORY__  @@ "tests/**/*.??proj"
+let srcGlob =rootDir </> "src/**/*.??proj"
+let testsGlob = rootDir </> "tests/**/*.??proj"
 
 let srcAndTest =
     !! srcGlob
     ++ testsGlob
 
-let distDir = __SOURCE_DIRECTORY__  @@ "dist"
+let distDir = rootDir </> "dist"
 let distGlob = distDir @@ "*.nupkg"
 
 let coverageThresholdPercent = 80
-let coverageReportDir =  __SOURCE_DIRECTORY__  @@ "docs" @@ "coverage"
+let coverageReportDir =  rootDir </> "docs" @@ "coverage"
 
 
-let docsDir = __SOURCE_DIRECTORY__  @@ "docs"
-let docsSrcDir = __SOURCE_DIRECTORY__  @@ "docsSrc"
+let docsDir = rootDir </> "docs"
+let docsSrcDir = rootDir </> "docsSrc"
 let docsToolDir = __SOURCE_DIRECTORY__ @@ "docsTool"
 
 let gitOwner = "TheAngryByrd"
@@ -790,4 +796,6 @@ Target.create "ReleaseDocs" releaseDocs
 // Target Start
 //-----------------------------------------------------------------------------
 
-Target.runOrDefaultWithArguments "DotnetPack"
+// Target.runOrDefaultWithArguments "DotnetPack"
+
+Target.runOrDefaultWithArguments ""
