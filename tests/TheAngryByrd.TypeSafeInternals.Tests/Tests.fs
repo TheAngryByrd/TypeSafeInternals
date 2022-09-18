@@ -7,6 +7,6 @@ module SayTests =
     [<Tests>]
     let tests =
         testList "samples" [
-            testCase "Add two integers" <| fun _ ->
-                ()
+            testCase "Add two integers"
+            <| fun _ -> ()
         ]

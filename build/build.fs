@@ -1,11 +1,5 @@
 open Argu
 open System.IO.Compression
-#load ".fake/build.fsx/intellisense.fsx"
-#load "docsTool/CLI.fs"
-#if !FAKE
-#r "Facades/netstandard"
-#r "netstandard"
-#endif
 open System
 open Fake.SystemHelper
 open Fake.Core
@@ -17,8 +11,16 @@ open Fake.IO.Globbing.Operators
 open Fake.Core.TargetOperators
 open Fake.Api
 open Fake.BuildServer
-open Fantomas
-open Fantomas.FakeHelpers
+
+let getCLIArgs () =
+    System.Environment.GetCommandLineArgs()
+    |> Array.skip 1 // The first element in the array contains the file name of the executing program
+
+getCLIArgs ()
+|> Array.toList
+|> Context.FakeExecutionContext.Create false "build.fsx"
+|> Context.RuntimeContext.Fake
+|> Context.setExecutionContext
 
 BuildServer.install [
     GitHubActions.Installer
@@ -45,31 +47,33 @@ let environVarAsBoolOrDefault varName defaultValue =
 let productName = "TheAngryByrd.TypeSafeInternals"
 let sln = "TheAngryByrd.TypeSafeInternals.sln"
 
+let rootDir = __SOURCE_DIRECTORY__ </> ".."
+
 
 let srcCodeGlob =
-    !! (__SOURCE_DIRECTORY__  @@ "src/**/*.fs")
-    ++ (__SOURCE_DIRECTORY__  @@ "src/**/*.fsx")
+    !! (rootDir </> "src/**/*.fs")
+    ++ (rootDir </> "src/**/*.fsx")
 
 let testsCodeGlob =
-    !! (__SOURCE_DIRECTORY__  @@ "tests/**/*.fs")
-    ++ (__SOURCE_DIRECTORY__  @@ "tests/**/*.fsx")
+    !! (rootDir </> "tests/**/*.fs")
+    ++ (rootDir </> "tests/**/*.fsx")
 
-let srcGlob =__SOURCE_DIRECTORY__  @@ "src/**/*.??proj"
-let testsGlob = __SOURCE_DIRECTORY__  @@ "tests/**/*.??proj"
+let srcGlob =rootDir </> "src/**/*.??proj"
+let testsGlob = rootDir </> "tests/**/*.??proj"
 
 let srcAndTest =
     !! srcGlob
     ++ testsGlob
 
-let distDir = __SOURCE_DIRECTORY__  @@ "dist"
+let distDir = rootDir </> "dist"
 let distGlob = distDir @@ "*.nupkg"
 
 let coverageThresholdPercent = 80
-let coverageReportDir =  __SOURCE_DIRECTORY__  @@ "docs" @@ "coverage"
+let coverageReportDir =  rootDir </> "docs" @@ "coverage"
 
 
-let docsDir = __SOURCE_DIRECTORY__  @@ "docs"
-let docsSrcDir = __SOURCE_DIRECTORY__  @@ "docsSrc"
+let docsDir = rootDir </> "docs"
+let docsSrcDir = rootDir </> "docsSrc"
 let docsToolDir = __SOURCE_DIRECTORY__ @@ "docsTool"
 
 let gitOwner = "TheAngryByrd"
@@ -97,11 +101,11 @@ let docsSiteBaseUrl = sprintf "https://%s.github.io/%s" gitOwner gitRepoName
 let disableCodeCoverage = environVarAsBoolOrDefault "DISABLE_COVERAGE" false
 
 let githubToken = Environment.environVarOrNone "GITHUB_TOKEN"
-Option.iter(TraceSecrets.register "<GITHUB_TOKEN>" )
+Option.iter(TraceSecrets.register "<GITHUB_TOKEN>" ) githubToken
 
 
 let nugetToken = Environment.environVarOrNone "NUGET_TOKEN"
-Option.iter(TraceSecrets.register "<NUGET_TOKEN>")
+Option.iter(TraceSecrets.register "<NUGET_TOKEN>") nugetToken
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -227,6 +231,10 @@ module dotnet =
 
     let fsharpAnalyzer optionConfig args =
         tool optionConfig "fsharp-analyzers" args
+
+
+    let fantomas args =
+        DotNet.exec id "fantomas" args
 
 module FSharpAnalyzers =
     type Arguments =
@@ -511,7 +519,7 @@ let generateAssemblyInfo _ =
             AssemblyInfo.Metadata("GitHash", Git.Information.getCurrentSHA1(null))
         ]
 
-    let getProjectDetails projectPath =
+    let getProjectDetails (projectPath : string) =
         let projectName = IO.Path.GetFileNameWithoutExtension(projectPath)
         (
             projectPath,
@@ -658,23 +666,52 @@ let githubRelease _ =
     |> GitHub.publishDraft
     |> Async.RunSynchronously
 
+let ignoredFilePredicates = [
+    fun (f : string) -> f.EndsWith("AssemblyInfo.fs")
+    fun (f : string) -> f.EndsWith("Generated.fs")
+]
+
+module Seq =
+    let filterOut predicate xs =
+        xs |> Seq.filter(predicate >> not)
+
+let withoutIgnoredFiles =
+    Seq.filterOut(fun f -> ignoredFilePredicates |> Seq.exists (fun p -> p f))
+
 let formatCode _ =
-    [
-        srcCodeGlob
-        testsCodeGlob
-    ]
-    |> Seq.collect id
-    // Ignore AssemblyInfo
-    |> Seq.filter(fun f -> f.EndsWith("AssemblyInfo.fs") |> not)
-    |> formatFilesAsync FormatConfig.FormatConfig.Default
-    |> Async.RunSynchronously
-    |> Seq.iter(fun result ->
-        match result with
-        | Formatted(original, tempfile) ->
-            tempfile |> Shell.copyFile original
-            Trace.logfn "Formatted %s" original
-        | _ -> ()
-    )
+    let result =
+        [
+            srcCodeGlob
+            testsCodeGlob
+        ]
+        |> Seq.collect id
+        |> withoutIgnoredFiles
+        |> String.concat " "
+        |> dotnet.fantomas
+
+    if not result.OK then
+        Trace.traceErrorfn "Errors while formatting all files: %A" result.Messages
+
+
+let checkFormatCode _ =
+    let result =
+        [
+            srcCodeGlob
+            testsCodeGlob
+        ]
+        |> Seq.collect id
+        |> withoutIgnoredFiles
+        |> String.concat " "
+        |> sprintf "%s --check"
+        |> dotnet.fantomas
+
+    if result.ExitCode = 0 then
+        Trace.log "No files need formatting"
+    elif result.ExitCode = 99 then
+        failwith "Some files need formatting, check output for more info"
+    else
+        Trace.logf "Errors while formatting: %A" result.Errors
+
 
 
 let buildDocs _ =
@@ -715,6 +752,7 @@ Target.create "PublishToNuGet" publishToNuget
 Target.create "GitRelease" gitRelease
 Target.create "GitHubRelease" githubRelease
 Target.create "FormatCode" formatCode
+Target.create "CheckFormatCode" checkFormatCode
 Target.create "Release" ignore
 Target.create "BuildDocs" buildDocs
 Target.create "WatchDocs" watchDocs
@@ -727,28 +765,29 @@ Target.create "ReleaseDocs" releaseDocs
 
 // Only call Clean if DotnetPack was in the call chain
 // Ensure Clean is called before DotnetRestore
-"Clean" ?=> "DotnetRestore"
-"Clean" ==> "DotnetPack"
+"Clean" ?=> "DotnetRestore" |> ignore
+"Clean" ==> "DotnetPack" |> ignore
 
 // Only call GenerateAssemblyInfo if Publish was in the call chain
 // Ensure GenerateAssemblyInfo is called after DotnetRestore and before DotnetBuild
-"DotnetRestore" ?=> "GenerateAssemblyInfo"
-"GenerateAssemblyInfo" ?=> "DotnetBuild"
-"GenerateAssemblyInfo" ==> "PublishToNuGet"
+"DotnetRestore" ?=> "GenerateAssemblyInfo" |> ignore
+"GenerateAssemblyInfo" ?=> "DotnetBuild" |> ignore
+"GenerateAssemblyInfo" ==> "PublishToNuGet" |> ignore
 
 // Only call UpdateChangelog if Publish was in the call chain
 // Ensure UpdateChangelog is called after DotnetRestore and before GenerateAssemblyInfo
-"DotnetRestore" ?=> "UpdateChangelog"
-"UpdateChangelog" ?=> "GenerateAssemblyInfo"
-"UpdateChangelog" ==> "PublishToNuGet"
+"DotnetRestore" ?=> "UpdateChangelog" |> ignore
+"UpdateChangelog" ?=> "GenerateAssemblyInfo" |> ignore
+"UpdateChangelog" ==> "PublishToNuGet" |> ignore
 
-"BuildDocs" ==> "ReleaseDocs"
-"BuildDocs" ?=> "PublishToNuget"
-"DotnetPack" ?=> "BuildDocs"
-"GenerateCoverageReport" ?=> "ReleaseDocs"
+"BuildDocs" ==> "ReleaseDocs" |> ignore
+"BuildDocs" ?=> "PublishToNuget" |> ignore
+"DotnetPack" ?=> "BuildDocs" |> ignore
+"GenerateCoverageReport" ?=> "ReleaseDocs" |> ignore
 
 
 "DotnetRestore"
+    ==> "CheckFormatCode"
     ==> "DotnetBuild"
     // ==> "FSharpAnalyzers"
     ==> "DotnetTest"
@@ -759,10 +798,10 @@ Target.create "ReleaseDocs" releaseDocs
     ==> "GitRelease"
     ==> "GitHubRelease"
     ==> "Release"
-
+|> ignore
 "DotnetRestore"
     ==> "WatchTests"
-
+|> ignore
 //-----------------------------------------------------------------------------
 // Target Start
 //-----------------------------------------------------------------------------
