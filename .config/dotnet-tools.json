@@ -8,14 +8,8 @@
         "reportgenerator"
       ]
     },
-    "fake-cli": {
-      "version": "5.20.4-alpha.1642",
-      "commands": [
-        "fake"
-      ]
-    },
     "paket": {
-      "version": "6.0.0-beta8",
+        "version": "6.2.1",
       "commands": [
         "paket"
       ]
@@ -30,6 +24,12 @@
       "version": "0.7.0",
       "commands": [
         "fsharp-analyzers"
+      ]
+    },
+    "fantomas": {
+      "version": "5.0.1",
+      "commands": [
+        "fantomas"
       ]
     }
   }
